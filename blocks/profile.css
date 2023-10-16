@@ -19,6 +19,7 @@
     margin-top: 15px;
     border-width: 1px;
     border-color: #FFF;
+    margin-left: 10px;
 }
 
 .profile__add-button{
@@ -99,7 +100,6 @@
     .profile__title{
         font-size: 22px;
         line-height: 26px;
-        padding-right: 10px;
         max-width: 280px;
     }
     .profile__description{

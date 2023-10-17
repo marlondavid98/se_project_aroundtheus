@@ -1,6 +1,6 @@
 .header{
     margin-top: 45px;
-    height: 75px;
+    min-height: 74px;
     border-style: solid;
     border-width: 1px;
     border-color: #545454;
@@ -16,16 +16,15 @@
 
 @media screen and (max-width:480px){
     .header{
-         margin-top: 28px;
-         padding-left: 27px;
-         height: 56px;
-         min-width: 320px;
-         margin-bottom: 42px;
+        margin-top: 28px;
+        min-height: 56px;
+        min-width: 320px;
+        margin-bottom: 42px;
     }
-}
-@media screen and (max-width: 1100px){
+
     .header__logo{
-        padding: 0 20px;
-        max-width: calc(100%-40px);
+        width:126px;
+        height: 24px;
+        padding-left: 27px;
     }
 }

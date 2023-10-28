@@ -9,7 +9,7 @@
     background-color: rgba(0,0,0, .5);
 }
 
-.modal__opened{
+.modal_opened{
     display: none;
 }
 

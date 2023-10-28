@@ -22,7 +22,17 @@ const initialCards = [
   {
     name: "Lago di Braies",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  }
+  },
 ];
 
-console.log(initialCards);
+const profileEditBtn = document.querySelector(".js-profile-edit-button");
+const profileEditModal = document.querySelector(".js-profile-edit-modal");
+const profileCloseEditModal = document.querySelector(".js-close-edit-profile");
+
+profileEditBtn.addEventListener("click", () => {
+  profileEditModal.classList.remove("modal__opened");
+});
+
+profileCloseEditModal.addEventListener("click", () => {
+  profileEditModal.classList.add("modal__opened");
+});

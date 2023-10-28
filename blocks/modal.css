@@ -9,6 +9,10 @@
     background-color: rgba(0,0,0, .5);
 }
 
+.modal__opened{
+    display: none;
+}
+
 .modal__container{
     background-color: white;
     margin: auto;

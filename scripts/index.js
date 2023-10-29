@@ -41,10 +41,10 @@ const cardList = document.querySelector(".js-card-list");
 function openProfileModal() {
   titleInput.value = profileTitle.textContent;
   descriptionInput.value = profileDescription.textContent;
-  profileEditModal.classList.add("modal__opened");
+  profileEditModal.classList.add("modal_opened");
 }
 function closeProfileModal() {
-  profileEditModal.classList.remove("modal__opened");
+  profileEditModal.classList.remove("modal_opened");
 }
 function profileSubmit(e) {
   e.preventDefault();

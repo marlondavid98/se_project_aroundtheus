@@ -8,6 +8,7 @@
   height: 282px;
   margin: 0;
   background-color: black;
+  border-radius: 10px 10px 0 0;
 }
 
 .card__description {

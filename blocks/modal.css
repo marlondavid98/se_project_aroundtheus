@@ -62,7 +62,7 @@
 
 .modal__user{
     min-width: 358px;
-    padding:0 0 13px 0;
+    padding:0 0 13px 2px;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
@@ -88,7 +88,7 @@
     border-right: none;
     border-left: none;
     border-color: rgba(0,0,0,.2);
-    padding: 0 0 13px 0;
+    padding: 0 0 13px 2px;
     margin-bottom: 47px;
 }
 

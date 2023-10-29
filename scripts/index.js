@@ -50,7 +50,7 @@ function profileSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = titleInput.value;
   profileDescription.textContent = descriptionInput.value;
-  closeModal();
+  closeProfileModal();
 }
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);

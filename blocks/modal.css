@@ -49,9 +49,6 @@
 .modal__close:hover {
   cursor: pointer;
   opacity: 0.8;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-color: transparent;
 }
 
 .modal__form {

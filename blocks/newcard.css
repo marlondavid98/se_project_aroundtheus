@@ -1,4 +1,4 @@
-.modal {
+.newcard {
   position: fixed;
   bottom: 0;
   top: 0;
@@ -10,11 +10,11 @@
   visibility: hidden;
 }
 
-.modal_opened {
+.newcard_opened {
   visibility: visible;
 }
 
-.modal__container {
+.newcard__container {
   background-color: white;
   margin: auto;
   padding: 36px;
@@ -22,7 +22,7 @@
   position: relative;
 }
 
-.modal__title {
+.newcard__title {
   color: black;
   font-weight: 900px;
   font-size: 24px;
@@ -32,12 +32,12 @@
   min-width: 330px;
 }
 
-.modal__close {
+.newcard__close {
   height: 40px;
   width: 40px;
   padding: 0;
   border: none;
-  background-image: url(../images/Close1.svg);
+  background-image: url(../images/CloseN.svg);
   background-repeat: no-repeat;
   background-size: contain;
   background-color: transparent;
@@ -46,17 +46,17 @@
   left: calc(100% + 5px);
 }
 
-.modal__close:hover {
+.newcard__close:hover {
   cursor: pointer;
   opacity: 0.8;
 }
 
-.modal__form {
+.newcard__form {
   display: flex;
   flex-direction: column;
 }
 
-.modal__input {
+.newcard__input {
   padding: 0 0 13px 2px;
   font-weight: 400;
   font-size: 14px;
@@ -68,22 +68,22 @@
   margin-bottom: 29px;
 }
 
-.modal__input::placeholder {
+.newcard__input::placeholder {
   color: black;
   opacity: 1;
 }
 
-.modal__input:last-of-type {
+.newcard__input:last-of-type {
   margin-bottom: 47px;
 }
 
-.modal__description::placeholder {
+.newcard__description::placeholder {
   color: black;
   opacity: 1;
 }
 
-.modal__button {
-  background-image: url(../images/Save.svg);
+.newcard__button {
+  background-image: url(../images/Create.svg);
   height: 50px;
   background-repeat: no-repeat;
   border-radius: 2px;
@@ -91,40 +91,40 @@
   background-position: center;
 }
 
-.modal__button:hover {
+.newcard__button:hover {
   cursor: pointer;
   opacity: 0.8;
 }
 
 @media screen and (max-width: 480px) {
-  .modal__container {
+  .newcard__container {
     padding: 20px;
   }
 
-  .modal__title {
+  .newcard__title {
     font-size: 18px;
     line-height: 22px;
     padding-bottom: 75px;
     min-width: 238px;
   }
 
-  .modal__close {
+  .newcard__close {
     height: 26px;
     width: 26px;
     bottom: calc(100% + 15px);
     left: calc(100% - 26px);
   }
 
-  .modal__user {
+  .newcard__user {
     min-width: 238px;
   }
 
-  .modal__description {
+  .newcard__description {
     min-width: 238px;
     margin-bottom: 44px;
   }
 
-  .modal__button {
+  .newcard__button {
     height: 46px;
     background-position: center;
   }

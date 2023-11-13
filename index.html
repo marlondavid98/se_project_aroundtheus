@@ -52,7 +52,7 @@
       <div class="modal__container">
         <button class="modal__close js-close-edit-profile"></button>
         <h2 class="modal__title">Edit Profile</h2>
-        <form class="modal__form">
+        <form class="modal__form" id="modal-profile-form">
           <input
             id="title"
             type="text"
@@ -71,26 +71,26 @@
         </form>
       </div>
     </div>
-    <div class="newcard js-edit-newcard">
-      <div class="newcard__container">
-        <button class="newcard__close js-close-newcard"></button>
-        <h2 class="newcard__title">New Place</h2>
-        <form class="newcard__form">
+    <div class="modal js-profile-edit-modal">
+      <div class="modal__container">
+        <button class="modal__close js-close-edit-profile"></button>
+        <h2 class="modal__title">New Place</h2>
+        <form class="modal__form">
           <input
-            id="New Place"
+            id="titleimage"
             type="text"
             placeholder="Title"
-            class="newcard__input"
+            class="modal__input js-image-modal-title"
             required
           />
           <input
-            id="url"
+            id="imageurl"
             type="text"
-            placeholder="Image Url"
-            class="newcard__input"
+            placeholder="Image URL"
+            class="modal__input js-image-modal-url"
             required
           />
-          <button class="newcard__button" type="submit"></button>
+          <button class="modal__button" type="submit"></button>
         </form>
       </div>
     </div>

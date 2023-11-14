@@ -35,10 +35,7 @@
             ></button>
             <p class="profile__description js-profile-description">Explorer</p>
           </div>
-          <button
-            type="button"
-            class="profile__add-button js-newcard-add-button"
-          ></button>
+          <button type="button" class="profile__add-button"></button>
         </section>
         <section class="cards page__section">
           <ul class="cards__list js-card-list"></ul>
@@ -71,23 +68,23 @@
         </form>
       </div>
     </div>
-    <div class="modal js-profile-edit-modal">
+    <div class="modal js-new-card-modal">
       <div class="modal__container">
-        <button class="modal__close js-close-edit-profile"></button>
+        <button class="modal__close js-close-new-card"></button>
         <h2 class="modal__title">New Place</h2>
         <form class="modal__form">
           <input
             id="titleimage"
             type="text"
             placeholder="Title"
-            class="modal__input js-image-modal-title"
+            class="modal__input"
             required
           />
           <input
             id="imageurl"
             type="text"
             placeholder="Image URL"
-            class="modal__input js-image-modal-url"
+            class="modal__input"
             required
           />
           <button class="modal__button" type="submit"></button>
@@ -99,7 +96,11 @@
         <img src="" alt="" class="card__image" />
         <div class="card__description">
           <h2 class="card__text"></h2>
-          <button type="button" class="card__like-button"></button>
+          <button
+            type="button"
+            class="card__like-button"
+            id="cardliked"
+          ></button>
         </div>
       </li>
     </template>

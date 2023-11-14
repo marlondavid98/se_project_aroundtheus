@@ -45,3 +45,7 @@
   cursor: pointer;
   background: transparent url(../images/likehover.svg) center no-repeat;
 }
+
+.card_liked {
+  background-image: transparent url(../images/liked.svg) center no-repeat;
+}

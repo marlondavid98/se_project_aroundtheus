@@ -64,13 +64,13 @@ function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 
-function profileSubmit(e) {
+function submitProfile(e) {
   e.preventDefault();
   profileTitle.textContent = titleInput.value;
   profileDescription.textContent = descriptionInput.value;
   closeModal(profileEditModal);
 }
-function newCardSubmit(e) {
+function submitNewCard(e) {
   e.preventDefault();
   const name = imageTitle.value;
   const link = imageUrl.value;
@@ -78,6 +78,7 @@ function newCardSubmit(e) {
     name,
     link,
   });
+  e.target.reset();
   cardList.prepend(cardElement);
   closeModal(newCardModal);
 }
@@ -94,7 +95,7 @@ function getCardElement(data) {
   deleteBtn.addEventListener("click", () => {
     cardElement.remove(data);
   });
-  cardImageSrc.addEventListener("click", () => handlePreviwImage(data));
+  cardImageSrc.addEventListener("click", () => handlePreviewImage(data));
 
   cardImageSrc.src = data.link;
   cardImageSrc.alt = data.name;
@@ -110,10 +111,10 @@ profileEditBtn.addEventListener("click", () => {
 profileCloseEditModal.addEventListener("click", () =>
   closeModal(profileEditModal)
 );
-profileEditForm.addEventListener("submit", profileSubmit);
+profileEditForm.addEventListener("submit", submitProfile);
 addNewCardBtn.addEventListener("click", () => openModal(newCardModal));
 closeNewCardBtn.addEventListener("click", () => closeModal(newCardModal));
-newCardAddForm.addEventListener("submit", newCardSubmit);
+newCardAddForm.addEventListener("submit", submitNewCard);
 closeExpandImg.addEventListener("click", () => closeModal(expandImgModal));
 
 initialCards.forEach((data) => {
@@ -121,7 +122,7 @@ initialCards.forEach((data) => {
   cardList.append(cardElement);
 });
 
-const handlePreviwImage = (data) => {
+const handlePreviewImage = (data) => {
   const expandedImg = expandImgModal.querySelector(".modal__img-expand");
   const expandedImgText = expandImgModal.querySelector(".modal__name-title");
   expandedImg.src = data.link;

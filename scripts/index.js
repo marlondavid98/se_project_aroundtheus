@@ -34,6 +34,7 @@ const profileEditBtn = document.querySelector(".js-profile-edit-button");
 const profileCloseEditModal = document.querySelector(".js-close-edit-profile");
 const addNewCardBtn = document.querySelector(".profile__add-button");
 const closeNewCardBtn = document.querySelector(".js-close-new-card");
+const closeExpandImg = document.querySelector(".js-close-expand-image");
 
 //DOM
 const profileTitle = document.querySelector(".js-profile-title");
@@ -42,6 +43,7 @@ const profileDescription = document.querySelector(".js-profile-description");
 //modals
 const profileEditModal = document.querySelector(".js-profile-edit-modal");
 const newCardModal = document.querySelector(".js-new-card-modal");
+const expandImgModal = document.querySelector(".js-expand-img-modal");
 
 //forms
 const profileEditForm = profileEditModal.querySelector(".modal__form");
@@ -79,11 +81,20 @@ function newCardSubmit(e) {
   cardList.prepend(cardElement);
   closeModal(newCardModal);
 }
-
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImageSrc = cardElement.querySelector(".card__image");
   const cardText = cardElement.querySelector(".card__text");
+  const likeBtn = cardElement.querySelector(".card__like-button");
+  const deleteBtn = cardElement.querySelector(".card__trash-button");
+
+  likeBtn.addEventListener("click", () => {
+    likeBtn.classList.toggle("card__like-button_active");
+  });
+  deleteBtn.addEventListener("click", () => {
+    cardElement.remove(data);
+  });
+  cardImageSrc.addEventListener("click", () => handlePreviwImage(data));
 
   cardImageSrc.src = data.link;
   cardImageSrc.alt = data.name;
@@ -103,8 +114,18 @@ profileEditForm.addEventListener("submit", profileSubmit);
 addNewCardBtn.addEventListener("click", () => openModal(newCardModal));
 closeNewCardBtn.addEventListener("click", () => closeModal(newCardModal));
 newCardAddForm.addEventListener("submit", newCardSubmit);
+closeExpandImg.addEventListener("click", () => closeModal(expandImgModal));
 
 initialCards.forEach((data) => {
   const cardElement = getCardElement(data);
   cardList.append(cardElement);
 });
+
+const handlePreviwImage = (data) => {
+  const expandedImg = expandImgModal.querySelector(".modal__img-expand");
+  const expandedImgText = expandImgModal.querySelector(".modal__name-title");
+  expandedImg.src = data.link;
+  expandedImg.alt = data.name;
+  expandedImgText.textContent = data.name;
+  openModal(expandImgModal);
+};

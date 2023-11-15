@@ -100,6 +100,25 @@
   opacity: 0.8;
 }
 
+.modal__expanded {
+  margin: auto;
+  position: relative;
+}
+
+.modal__img-expand {
+  max-width: 816px;
+  max-height: 540px;
+}
+
+.modal__name-title {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: white;
+  margin: 0;
+  padding: 10px 0 0 0;
+}
+
 @media screen and (max-width: 480px) {
   .modal__container {
     padding: 20px;

@@ -91,8 +91,17 @@
         </form>
       </div>
     </div>
+
+    <div class="modal js-expand-img-modal">
+      <div class="modal__expanded">
+        <button class="modal__close js-close-expand-image"></button>
+        <img src="" alt="" class="modal__img-expand" />
+        <h3 class="modal__name-title"></h3>
+      </div>
+    </div>
     <template id="card-template">
       <li class="card">
+        <button type="button" class="card__trash-button"></button>
         <img src="" alt="" class="card__image" />
         <div class="card__description">
           <h2 class="card__text"></h2>

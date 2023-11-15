@@ -8,10 +8,14 @@
   display: flex;
   background-color: rgba(0, 0, 0, 0.5);
   visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
 .modal_opened {
   visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
 }
 
 .modal__container {
@@ -106,8 +110,8 @@
 }
 
 .modal__img-expand {
-  max-width: 816px;
-  max-height: 540px;
+  max-width: 75vw;
+  max-height: 75vh;
 }
 
 .modal__name-title {

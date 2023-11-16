@@ -46,8 +46,8 @@ const newCardModal = document.querySelector(".js-new-card-modal");
 const expandImgModal = document.querySelector(".js-expand-img-modal");
 
 //forms
-const profileEditForm = profileEditModal.querySelector(".modal__form");
-const newCardAddForm = newCardModal.querySelector(".modal__form");
+const profileEditForm = document.forms.profileform;
+const newCardAddForm = document.forms.newcardform;
 
 // forms inputs
 const titleInput = document.querySelector(".js-profile-modal-title");

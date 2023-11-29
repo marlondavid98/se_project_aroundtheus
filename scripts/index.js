@@ -131,3 +131,15 @@ const handlePreviewImage = (data) => {
   expandedImgText.textContent = data.name;
   openModal(expandImgModal);
 };
+
+window.onkeydown = function (e) {
+  if (e.keyCode == 27) {
+    const currentModal = document.querySelector(".modal_opened");
+    closeModal(currentModal);
+  }
+};
+
+/*document.body.addEventListener("click", () => {
+  const currentModal = document.querySelector(".modal_opened");
+  currentModal.classList.remove("modal_opened");
+});*/

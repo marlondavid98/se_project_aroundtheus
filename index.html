@@ -50,20 +50,34 @@
         <button class="modal__close js-close-edit-profile"></button>
         <h2 class="modal__title">Edit Profile</h2>
         <form class="modal__form" name="profileform">
-          <input
-            id="title"
-            type="text"
-            placeholder="Name"
-            class="modal__input js-profile-modal-title"
-            required
-          />
-          <input
-            id="description"
-            type="text"
-            placeholder="Description"
-            class="modal__input js-profile-modal-description"
-            required
-          />
+          <label class="modal__label">
+            <input
+              id="profile-name"
+              type="text"
+              placeholder="Name"
+              class="modal__input js-profile-modal-title"
+              minlength="2"
+              maxlength="40"
+              required
+            />
+            <span class="modal__error" id="profile-name-error"
+              >Error Message</span
+            >
+          </label>
+          <label class="modal__label">
+            <input
+              id="profile-description"
+              type="text"
+              placeholder="Description"
+              class="modal__input js-profile-modal-description"
+              minlength="2"
+              maxlength="200"
+              required
+            />
+            <span class="modal__error" id="profile-description-error"
+              >Error message</span
+            >
+          </label>
           <button class="modal__button" type="submit"></button>
         </form>
       </div>
@@ -73,21 +87,31 @@
         <button class="modal__close js-close-new-card"></button>
         <h2 class="modal__title">New Place</h2>
         <form class="modal__form" name="newcardform">
-          <input
-            id="titleimage"
-            type="text"
-            placeholder="Title"
-            class="modal__input"
-            required
-          />
-          <input
-            id="imageurl"
-            type="text"
-            placeholder="Image URL"
-            class="modal__input"
-            required
-          />
-          <button class="modal__button" type="submit"></button>
+          <label class="modal__label">
+            <input
+              id="title-image"
+              type="text"
+              placeholder="Title"
+              class="modal__input"
+              minlength="1"
+              maxlength="30"
+              required
+            />
+            <span class="modal__error" id="title-image-error"
+              >Error Message</span
+            >
+          </label>
+          <label class="modal__label">
+            <input
+              id="image-url"
+              type="url"
+              placeholder="Image URL"
+              class="modal__input"
+              required
+            />
+            <span class="modal__error" id="image-url-error">Error Message</span>
+          </label>
+          <button class="modal__button" type="submit" disabled></button>
         </form>
       </div>
     </div>
@@ -114,5 +138,6 @@
       </li>
     </template>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validation.js" defer></script>
   </body>
 </html>

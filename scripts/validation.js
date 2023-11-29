@@ -33,10 +33,9 @@ function setEventListeners(formElement, options) {
 
 function checkInputValidity(formElement, inputElement, options) {
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, options);
-  } else {
-    hideInputError(formElement, inputElement, options);
+    return showInputError(formElement, inputElement, options);
   }
+  hideInputError(formElement, inputElement, options);
 }
 
 function showInputError(formElement, inputElement, object) {
@@ -66,18 +65,18 @@ function hideInputError(formElement, inputElement, object) {
 }
 
 function toggleButtonState(inputElements, submitBtn, options) {
-  let foundInvalid = false;
   const { inactiveButtonClass } = options;
-  inputElements.forEach((inputElement) => {
-    if (!inputElement.validity.valid) {
-      foundInvalid = true;
-    }
-  });
-  if (foundInvalid) {
+
+  if (hasValidInputs(inputElements)) {
     submitBtn.classList.add(inactiveButtonClass);
-    return (submitBtn.dissabled = true);
+    submitBtn.dissabled = true;
+    return;
   }
   submitBtn.classList.remove(inactiveButtonClass);
   submitBtn.dissabled = false;
+}
+
+function hasValidInputs(inputList) {
+  return !inputList.every((inputElement) => inputElement.validity.valid);
 }
 enableValidation(config);

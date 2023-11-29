@@ -58,6 +58,8 @@ function hideInputError(formElement, inputElement, object) {
   const errorMessageElement = formElement.querySelector(
     "#" + inputElement.id + "-error"
   );
+  const errorBorderElement = formElement.querySelector("#" + inputElement.id);
+  errorBorderElement.classList.remove(inputErrorClass);
   errorMessageElement.classList.remove(inputErrorClass);
   errorMessageElement.textContent = "";
   errorMessageElement.classList.remove(errorClass);
@@ -73,10 +75,9 @@ function toggleButtonState(inputElements, submitBtn, options) {
   });
   if (foundInvalid) {
     submitBtn.classList.add(inactiveButtonClass);
-    submitBtn.dissabled = true;
-  } else {
-    submitBtn.classList.remove(inactiveButtonClass);
-    submitBtn.dissabled = false;
+    return (submitBtn.dissabled = true);
   }
+  submitBtn.classList.remove(inactiveButtonClass);
+  submitBtn.dissabled = false;
 }
 enableValidation(config);

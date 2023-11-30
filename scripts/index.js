@@ -139,6 +139,15 @@ window.onkeydown = function (e) {
   }
 };
 
+const modalList = document.querySelectorAll(".modal");
+
+modalList.forEach((modal) => {
+  modal.addEventListener("click", (e) => {
+    if (e.target.classList.contains("modal")) {
+      closeModal(modal);
+    }
+  });
+});
 /*document.body.addEventListener("click", () => {
   const currentModal = document.querySelector(".modal_opened");
   currentModal.classList.remove("modal_opened");

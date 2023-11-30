@@ -19,8 +19,7 @@ function enableValidation(options) {
 }
 
 function setEventListeners(formElement, options) {
-  const { inputSelector } = options;
-  const { submitButtonSelector } = options;
+  const { inputSelector, submitButtonSelector } = options;
   const inputElements = [...formElement.querySelectorAll(inputSelector)];
   const submitBtn = formElement.querySelector(submitButtonSelector);
   inputElements.forEach((inputElement) => {
@@ -33,9 +32,10 @@ function setEventListeners(formElement, options) {
 
 function checkInputValidity(formElement, inputElement, options) {
   if (!inputElement.validity.valid) {
-    return showInputError(formElement, inputElement, options);
+    showInputError(formElement, inputElement, options);
+  } else {
+    hideInputError(formElement, inputElement, options);
   }
-  hideInputError(formElement, inputElement, options);
 }
 
 function showInputError(formElement, inputElement, object) {
@@ -59,7 +59,6 @@ function hideInputError(formElement, inputElement, object) {
   );
   const errorBorderElement = formElement.querySelector("#" + inputElement.id);
   errorBorderElement.classList.remove(inputErrorClass);
-  errorMessageElement.classList.remove(inputErrorClass);
   errorMessageElement.textContent = "";
   errorMessageElement.classList.remove(errorClass);
 }

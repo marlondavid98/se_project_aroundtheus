@@ -124,18 +124,18 @@
   background-position: center;
 }
 
-.modal__button:hover {
-  cursor: pointer;
+.modal__button:hover:not(:disabled) {
   opacity: 0.8;
+  cursor: pointer;
 }
 
 .modal__button_disabled {
-  background-image: url(../images/Submit-Button-dis.svg);
-  height: 50px;
-  background-repeat: no-repeat;
-  border-radius: 2px;
-  border: none;
-  background-position: center;
+  opacity: 0.2;
+}
+
+.modal__button_disabled:hover {
+  opacity: 0.2;
+  cursor: default;
 }
 
 .modal__expanded {

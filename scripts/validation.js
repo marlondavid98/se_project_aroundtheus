@@ -68,11 +68,11 @@ function toggleButtonState(inputElements, submitBtn, options) {
 
   if (hasValidInputs(inputElements)) {
     submitBtn.classList.add(inactiveButtonClass);
-    submitBtn.dissabled = true;
+    submitBtn.disabled = true;
     return;
   }
   submitBtn.classList.remove(inactiveButtonClass);
-  submitBtn.dissabled = false;
+  submitBtn.disabled = false;
 }
 
 function hasValidInputs(inputList) {

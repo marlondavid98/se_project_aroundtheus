@@ -59,9 +59,17 @@ const imageUrl = document.querySelector("#imageurl");
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", closeModalByEscape);
 }
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+}
+
+function closeModalByEscape(e) {
+  if (e.key === "Escape") {
+    const currentModal = document.querySelector(".modal_opened");
+    closeModal(currentModal);
+  }
 }
 
 function submitProfile(e) {
@@ -132,23 +140,12 @@ const handlePreviewImage = (data) => {
   openModal(expandImgModal);
 };
 
-window.onkeydown = function (e) {
-  if (e.keyCode == 27) {
-    const currentModal = document.querySelector(".modal_opened");
-    closeModal(currentModal);
-  }
-};
-
 const modalList = document.querySelectorAll(".modal");
 
 modalList.forEach((modal) => {
-  modal.addEventListener("click", (e) => {
+  modal.addEventListener("mousedown", (e) => {
     if (e.target.classList.contains("modal")) {
       closeModal(modal);
     }
   });
 });
-/*document.body.addEventListener("click", () => {
-  const currentModal = document.querySelector(".modal_opened");
-  currentModal.classList.remove("modal_opened");
-});*/

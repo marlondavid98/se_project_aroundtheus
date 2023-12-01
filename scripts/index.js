@@ -54,8 +54,8 @@ const titleInput = document.querySelector(".js-profile-modal-title");
 const descriptionInput = document.querySelector(
   ".js-profile-modal-description"
 );
-const imageTitle = document.querySelector("#titleimage");
-const imageUrl = document.querySelector("#imageurl");
+const imageTitle = document.querySelector("#title-image");
+const imageUrl = document.querySelector("#image-url");
 
 function openModal(modal) {
   modal.classList.add("modal_opened");

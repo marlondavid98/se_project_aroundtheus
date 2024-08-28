@@ -1,3 +1,8 @@
+import FormValidator from "../components/FormValidator.js";
+import Card from "../components/Card.js";
+
+const ESC_KEYCODE = 27;
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -27,6 +32,7 @@ const initialCards = [
 
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
+
 const cardList = document.querySelector(".js-card-list");
 
 //buttons
@@ -57,6 +63,27 @@ const descriptionInput = document.querySelector(
 const imageTitle = document.querySelector("#title-image");
 const imageUrl = document.querySelector("#image-url");
 
+//validation
+const validationSettings = {
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
+const editFormElement = profileEditModal.querySelector(".modal__form");
+const addFormElement = newCardModal.querySelector(".modal__form");
+
+const editFormValidator = new FormValidator(
+  validationSettings,
+  editFormElement
+);
+const addFormValidator = new FormValidator(validationSettings, addFormElement);
+
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
+
 function openModal(modal) {
   modal.classList.add("modal_opened");
   document.addEventListener("keydown", closeModalByEscape);
@@ -79,6 +106,7 @@ function submitProfile(e) {
   profileDescription.textContent = descriptionInput.value;
   closeModal(profileEditModal);
 }
+
 function submitNewCard(e) {
   e.preventDefault();
   const name = imageTitle.value;
@@ -91,6 +119,7 @@ function submitNewCard(e) {
   cardList.prepend(cardElement);
   closeModal(newCardModal);
 }
+
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImageSrc = cardElement.querySelector(".card__image");
@@ -127,8 +156,12 @@ closeNewCardBtn.addEventListener("click", () => closeModal(newCardModal));
 newCardAddForm.addEventListener("submit", submitNewCard);
 closeExpandImg.addEventListener("click", () => closeModal(expandImgModal));
 
+const cardSelector = document.querySelector("#card-template");
+//render
 initialCards.forEach((data) => {
+  const card = new Card(data, cardSelector).generateCard();
   const cardElement = getCardElement(data);
+
   cardList.append(cardElement);
 });
 

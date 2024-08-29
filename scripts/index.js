@@ -156,12 +156,13 @@ closeNewCardBtn.addEventListener("click", () => closeModal(newCardModal));
 newCardAddForm.addEventListener("submit", submitNewCard);
 closeExpandImg.addEventListener("click", () => closeModal(expandImgModal));
 
-const cardSelector = document.querySelector("#card-template");
+//const cardSelector = document.querySelector("#card-template");
+const cardSelector = "#card-template";
 //render
 initialCards.forEach((data) => {
   const card = new Card(data, cardSelector).generateCard();
-  const cardElement = getCardElement(data);
 
+  const cardElement = getCardElement(data);
   cardList.append(cardElement);
 });
 

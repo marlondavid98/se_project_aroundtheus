@@ -24,9 +24,22 @@ class Card {
     this._cardSelector = cardSelector;
   }
 
+  generateCard() {
+    this._element = this._getTemplate();
+    console.log(this._element);
+    this._setEventListeners();
+
+    this._element.querySelector(
+      ".card__image"
+    ).style.backgroundImage = `url(${this._link})`;
+    this._element.querySelector(".card__text").textContent = this._name;
+    return this._element;
+  }
+
   _getTemplate() {
-    console.log(this._cardSelector);
-    this._element
+    //console.log(this._cardSelector);
+    //console.log(this._element);
+    return document
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
       .cloneNode(true);
@@ -64,17 +77,6 @@ class Card {
       .addEventListener("click", () => this._handlePreviewImg);
   }
 
-  generateCard() {
-    this._element = this._getTemplate();
-    console.log(this._element);
-    this._setEventListeners();
-
-    this._element.quarySelector(
-      ".card__image"
-    ).style.backgroundImage = `url(${this._link})`;
-    this._element.querySelector(".card__text").textContent = this._name;
-    return this._element;
-  }
 }
 
 export default Card;

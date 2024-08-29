@@ -111,34 +111,12 @@ function submitNewCard(e) {
   e.preventDefault();
   const name = imageTitle.value;
   const link = imageUrl.value;
-  const cardElement = getCardElement({
-    name,
-    link,
-  });
+  const data = {name, link};
+  const card = new Card(data, cardSelector).generateCard();
+
   e.target.reset();
-  cardList.prepend(cardElement);
+  cardList.prepend(card);
   closeModal(newCardModal);
-}
-
-function getCardElement(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImageSrc = cardElement.querySelector(".card__image");
-  const cardText = cardElement.querySelector(".card__text");
-  const likeBtn = cardElement.querySelector(".card__like-button");
-  const deleteBtn = cardElement.querySelector(".card__trash-button");
-
-  likeBtn.addEventListener("click", () => {
-    likeBtn.classList.toggle("card__like-button_active");
-  });
-  deleteBtn.addEventListener("click", () => {
-    cardElement.remove(data);
-  });
-  cardImageSrc.addEventListener("click", () => handlePreviewImage(data));
-
-  cardImageSrc.src = data.link;
-  cardImageSrc.alt = data.name;
-  cardText.textContent = data.name;
-  return cardElement;
 }
 
 profileEditBtn.addEventListener("click", () => {
@@ -156,24 +134,12 @@ closeNewCardBtn.addEventListener("click", () => closeModal(newCardModal));
 newCardAddForm.addEventListener("submit", submitNewCard);
 closeExpandImg.addEventListener("click", () => closeModal(expandImgModal));
 
-//const cardSelector = document.querySelector("#card-template");
 const cardSelector = "#card-template";
 //render
 initialCards.forEach((data) => {
   const card = new Card(data, cardSelector).generateCard();
-
-  const cardElement = getCardElement(data);
-  cardList.append(cardElement);
+  cardList.append(card);
 });
-
-const handlePreviewImage = (data) => {
-  const expandedImg = expandImgModal.querySelector(".modal__img-expand");
-  const expandedImgText = expandImgModal.querySelector(".modal__name-title");
-  expandedImg.src = data.link;
-  expandedImg.alt = data.name;
-  expandedImgText.textContent = data.name;
-  openModal(expandImgModal);
-};
 
 const modalList = document.querySelectorAll(".modal");
 

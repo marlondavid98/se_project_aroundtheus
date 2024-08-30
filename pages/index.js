@@ -96,11 +96,14 @@ function closeModalByEscape(e) {
   }
 }
 
+const disableSubmitBtn = new FormValidator(validationSettings, profileEditForm);
+
 function submitProfile(e) {
   e.preventDefault();
   profileTitle.textContent = titleInput.value;
   profileDescription.textContent = descriptionInput.value;
   closeModal(profileEditModal);
+  disableSubmitBtn.disableBtn();
 }
 
 function submitNewCard(e) {
@@ -108,6 +111,7 @@ function submitNewCard(e) {
   createNewCard()
   e.target.reset();
   closeModal(newCardModal);
+  disableSubmitBtn.disableBtn();
 }
 
 function createNewCard() {

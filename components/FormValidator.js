@@ -35,18 +35,25 @@ class FormValidator {
 
   }*/
 
-  _toggleButtonState(inputElements, submitBtn) {
-    const options = (this._inputSelector, this._submitButtonSelector);
-    const {inactiveButtonClass} = {options};
-
+  _toggleButtonState(inputElements) {
     if (this._hasValidInputs(inputElements)) {
-      submitBtn.classList.add(inactiveButtonClass);
-      submitBtn.disabled = true;
+      this._submitBtn.classList.add(this._inactiveButtonClass);
+      this._submitBtn.disabled = true;
       return;
     }
-    submitBtn.classList.remove(inactiveButtonClass);
-    submitBtn.disabled = false;
+    this._submitBtn.classList.remove(this._inactiveButtonClass);
+    this._submitBtn.disabled = false;
   }
+
+  disableBtn(){
+    const submitBtns = document.querySelectorAll(".modal__button");
+    console.log(submitBtns);
+    submitBtns.forEach((submit) => {
+      const popup = submit.closest('.modal');
+      submit.classList.add(this._inactiveButtonClass);
+      submit.disabled = true;
+    });
+  };
 
   _hasValidInputs(inputList) {
     return !inputList.every((inputElement) => inputElement.validity.valid);
@@ -67,7 +74,7 @@ class FormValidator {
     this._inputElements.forEach((inputElement) => {
       inputElement.addEventListener("input", (e) => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(this._inputElements, this._submitBtn);
+        this._toggleButtonState(this._inputElements);
       });
     });
   }

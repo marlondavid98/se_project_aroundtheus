@@ -1,10 +1,5 @@
 const expandImgModal = document.querySelector(".js-expand-img-modal");
 
-function openModal(modal) {
-  modal.classList.add("modal_opened");
-  document.addEventListener("keydown", closeModalByEscape);
-}
-
 class Card {
   constructor(data, cardSelector) {
     console.log(data);
@@ -56,7 +51,7 @@ class Card {
       expandedImg.alt = this._name;
       expandedImgText.textContent = this._name;
 
-      openModal(expandImgModal);
+      expandImgModal.classList.add("modal_opened");
     };
 }
 

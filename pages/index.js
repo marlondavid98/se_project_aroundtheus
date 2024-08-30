@@ -111,7 +111,7 @@ function submitNewCard(e) {
   e.preventDefault();
   const name = imageTitle.value;
   const link = imageUrl.value;
-  const data = {name, link};
+  const data = { name, link };
   const card = new Card(data, cardSelector).generateCard();
 
   e.target.reset();

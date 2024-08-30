@@ -23,6 +23,7 @@ class Card {
     this._link = data.link;
 
     this._cardSelector = cardSelector;
+    this._expandImgModal = document.querySelector(".js-expand-img-modal");
   }
 
   generateCard() {
@@ -35,32 +36,11 @@ class Card {
   }
 
   _getTemplate() {
-    //console.log(this._cardSelector);
-    //console.log(this._element);
     return document
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
       .cloneNode(true);
   }
-
-  /*_handleLikeBtn() {
-    console.log(this._element.querySelector(".card__like-button"));
-    this._element.classList.toggle("card__like-button_active");
-  }
-
-  _handleTrashBtn() {
-    cardElement.remove(data);
-  }
-
-  _handlePreviewImg() {
-    console.log("hello");
-    const expandedImg = expandImgModal.querySelector(".modal__img-expand");
-    const expandedImgText = expandImgModal.querySelector(".modal__name-title");
-    expandedImg.src = this._link;
-    expandedImg.alt = this._name;
-    expandedImgText.textContent = this._name;
-    openModal(expandImgModal);
-  }*/
 
   _setEventListeners() {
     const likeBtn = this._element.querySelector(".card__like-button");
@@ -76,16 +56,19 @@ class Card {
       this._element.remove(this._link, this._name);
     });
 
-    cardImg.addEventListener("click", () => {
-      const expandedImg = expandImgModal.querySelector(".modal__img-expand");
+    cardImg.addEventListener("click", () => this._handleImgClick ());
+  };
+
+    _handleImgClick() {
+      const expandedImg = this._expandImgModal.querySelector(".modal__img-expand");
       const expandedImgText =
         expandImgModal.querySelector(".modal__name-title");
       expandedImg.src = this._link;
       expandedImg.alt = this._name;
       expandedImgText.textContent = this._name;
+
       openModal(expandImgModal);
-    });
-  }
+    };
 }
 
 export default Card;

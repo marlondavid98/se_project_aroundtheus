@@ -4,17 +4,6 @@ function openModal(modal) {
   modal.classList.add("modal_opened");
   document.addEventListener("keydown", closeModalByEscape);
 }
-function closeModal(modal) {
-  modal.classList.remove("modal_opened");
-  document.removeEventListener("keydown", closeModalByEscape);
-}
-
-function closeModalByEscape(e) {
-  if (e.key === "Escape") {
-    const currentModal = document.querySelector(".modal_opened");
-    closeModal(currentModal);
-  }
-}
 
 class Card {
   constructor(data, cardSelector) {

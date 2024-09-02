@@ -101,7 +101,6 @@ function submitProfile(e) {
   profileTitle.textContent = titleInput.value;
   profileDescription.textContent = descriptionInput.value;
   closeModal(profileEditModal);
-  addFormValidator.disableBtn();
 }
 
 function submitNewCard(e) {
@@ -111,6 +110,7 @@ function submitNewCard(e) {
   closeModal(newCardModal);
   addFormValidator.disableBtn();
 }
+
 
 const handlePreviewImage = (data) => {
   const expandedImg = expandImgModal.querySelector(".modal__img-expand");

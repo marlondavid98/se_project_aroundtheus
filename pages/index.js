@@ -96,14 +96,12 @@ function closeModalByEscape(e) {
   }
 }
 
-const disableSubmitBtn = new FormValidator(validationSettings, profileEditForm);
-
 function submitProfile(e) {
   e.preventDefault();
   profileTitle.textContent = titleInput.value;
   profileDescription.textContent = descriptionInput.value;
   closeModal(profileEditModal);
-  disableSubmitBtn.disableBtn();
+  addFormValidator.disableBtn();
 }
 
 function submitNewCard(e) {
@@ -111,20 +109,29 @@ function submitNewCard(e) {
   createNewCard()
   e.target.reset();
   closeModal(newCardModal);
-  disableSubmitBtn.disableBtn();
+  addFormValidator.disableBtn();
 }
+
+const handlePreviewImage = (data) => {
+  const expandedImg = expandImgModal.querySelector(".modal__img-expand");
+  const expandedImgText = expandImgModal.querySelector(".modal__name-title");
+  expandedImg.src = data.link;
+  expandedImg.alt = data.name;
+  expandedImgText.textContent = data.name;
+  openModal(expandImgModal);
+};
 
 function createNewCard() {
   const name = imageTitle.value;
   const link = imageUrl.value;
   const data = { name, link };
-  const newCard = new Card (data, cardSelector).generateCard();
-  cardList.prepend(newCard);
+
+  cardList.prepend(createCard(data));
 }
 
 function createCard(data){
-  const mainCards = new Card(data, cardSelector).generateCard();
-  return mainCards;
+  const cardElement = new Card(data, cardSelector,handlePreviewImage).generateCard();
+  return cardElement;
 }
 
 profileEditBtn.addEventListener("click", () => {

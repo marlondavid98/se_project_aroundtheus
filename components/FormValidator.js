@@ -26,19 +26,9 @@ class FormValidator {
     errorElement.textContent = "";
   }
 
-  /*resetValidation() {
-    this._toggleButtonState();
-
-    this._inputList.forEach((inputElement) => {
-      this._hideError(inputElement)
-    });
-
-  }*/
-
   _toggleButtonState(inputElements) {
     if (this._hasValidInputs(inputElements)) {
-      this._submitBtn.classList.add(this._inactiveButtonClass);
-      this._submitBtn.disabled = true;
+      this.disableBtn();
       return;
     }
     this._submitBtn.classList.remove(this._inactiveButtonClass);
@@ -46,13 +36,8 @@ class FormValidator {
   }
 
   disableBtn(){
-    const submitBtns = document.querySelectorAll(".modal__button");
-    console.log(submitBtns);
-    submitBtns.forEach((submit) => {
-      const popup = submit.closest('.modal');
-      submit.classList.add(this._inactiveButtonClass);
-      submit.disabled = true;
-    });
+    this._submitBtn.classList.add(this._inactiveButtonClass);
+      this._submitBtn.disabled = true;
   };
 
   _hasValidInputs(inputList) {

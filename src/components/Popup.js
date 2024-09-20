@@ -30,7 +30,7 @@ export default class Popup {
     modalList.forEach((modal) => {
       modal.addEventListener("mousedown", (e) => {
         if (e.target.classList.contains("modal")) {
-          close(modal);
+          close();
         }
       });
     });

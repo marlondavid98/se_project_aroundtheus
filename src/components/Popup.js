@@ -14,10 +14,11 @@ export default class Popup {
   }
 
   _handleEscClose(e) {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
+      console.log("hey");
       this.close();
     }
-    close(this._popupElement);
+    this.close();
   }
 
   setEventListeners() {
@@ -30,7 +31,7 @@ export default class Popup {
     modalList.forEach((modal) => {
       modal.addEventListener("mousedown", (e) => {
         if (e.target.classList.contains("modal")) {
-          close();
+          this.close();
         }
       });
     });

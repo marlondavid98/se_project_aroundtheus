@@ -4,19 +4,19 @@ export default class UserInfo {
     this._job = job;
   }
 
-  getUserInfo(){
+  getUserInfo() {
     return {
-        name: this._name.textContent,
-        job: this._job.textContent
+      name: this._name.textContent,
+      job: this._job.textContent,
     };
   }
 
-  setUserInfo({newName, newJob}){
+  setUserInfo({ newName, newJob }) {
     if (newName) {
-        this._name.textContent = newName;
-      }
-      if (newJob) {
-        this._job.textContent = newJob;
-      }
+      this._name.textContent = newName;
+    }
+    if (newJob) {
+      this._job.textContent = newJob;
+    }
   }
 }

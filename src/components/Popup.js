@@ -1,7 +1,6 @@
 export default class Popup {
-  constructor( popupSelector ) {
+  constructor(popupSelector) {
     this._popupElement = document.querySelector(popupSelector);
-    console.log(this._popupElement);
   }
 
   open() {
@@ -15,10 +14,10 @@ export default class Popup {
   }
 
   _handleEscClose = (e) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       this.close();
     }
-  }
+  };
 
   setEventListeners() {
     const closeBtn = this._popupElement.querySelector(".modal__close");
@@ -30,6 +29,6 @@ export default class Popup {
       if (e.target.classList.contains("modal")) {
         this.close();
       }
-    })
+    });
   }
 }

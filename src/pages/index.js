@@ -3,7 +3,7 @@
 import * as constants from "../utils/constants.js";
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
-import Section from "../components/section.js";
+import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
@@ -21,18 +21,25 @@ const cardGeneration = new Section(
   },
   constants.cardList // passing the already selected DOM element
 );
-cardGeneration.renderItems()
+cardGeneration.renderItems();
 
-//CARD.JS 
+//CARD.JS
 
-function createCard(data){
-  const cardElement = new Card(data, constants.cardSelector,handlePreviewImage).generateCard();
+function createCard(data) {
+  const cardElement = new Card(
+    data,
+    constants.cardSelector,
+    handlePreviewImage
+  ).generateCard();
   return cardElement;
 }
 
 //USER INFO
 
-const userInformation = new UserInfo(constants.profileTitle, constants.profileDescription);
+const userInformation = new UserInfo(
+  constants.profileTitle,
+  constants.profileDescription
+);
 
 //EDIT PROFILE POPUPWITHFORM.JS
 
@@ -47,8 +54,9 @@ editProfile.setEventListeners();
 
 constants.profileEditBtn.addEventListener("click", () => {
   const { name, job } = userInformation.getUserInfo();
-  constants.profileTitle.value = name;
-  constants.profileDescription.value = job;
+
+  constants.titleInput.value = name;
+  constants.descriptionInput.value = job;
 
   editProfile.open();
   editProfileFormValidator.toggleButtonState();
@@ -75,7 +83,7 @@ constants.addNewCardBtn.addEventListener("click", () => {
 const imagePopup = new PopupWithImage(constants.expandImgModal);
 imagePopup.setEventListeners();
 
-function handlePreviewImage(data){
+function handlePreviewImage(data) {
   imagePopup.open(data);
 }
 
@@ -85,7 +93,10 @@ const editProfileFormValidator = new FormValidator(
   constants.validationSettings,
   constants.profileEditForm
 );
-const addCardFormValidator = new FormValidator(constants.validationSettings, constants.newCardAddForm);
+const addCardFormValidator = new FormValidator(
+  constants.validationSettings,
+  constants.newCardAddForm
+);
 
 editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();

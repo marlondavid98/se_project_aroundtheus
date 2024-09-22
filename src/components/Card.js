@@ -32,7 +32,7 @@ export default class Card {
     this._element.querySelector(".card__text").textContent = this._name;
 
     this._likeBtn.addEventListener("click", () => {
-      likeBtn.classList.toggle("card__like-button_active");
+      this._likeBtn.classList.toggle("card__like-button_active");
     });
 
     this._deleteBtn.addEventListener("click", () => {

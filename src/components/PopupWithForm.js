@@ -8,22 +8,12 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    const comparemodal = this._popupForm.querySelector(".modal__button").id;
-    if(comparemodal === "newcardsubmit"){
-      const name = document.querySelector("#title-image").value;
-      const link = document.querySelector("#image-url").value;
-      const data = { name, link };
-      return data;
-    }
-    else if (comparemodal === "profilesubmit"){
-      const profileTitle = document.querySelector(".js-profile-title");
-      const profileDescription = document.querySelector(".js-profile-description");
-      profileTitle.textContent = document.querySelector(".js-profile-modal-title").value;
-      profileDescription.textContent = document.querySelector(
-      ".js-profile-modal-description").value;
-      const data = {profileTitle, profileDescription};
-      return data ;
-    }
+    const inputList = this._popupForm.querySelectorAll(".modal__input");
+    const data = {};
+    inputList.forEach((input) => {
+      data[input.name] = input.value;
+    });
+    return data;
   }
 
   setEventListeners() {

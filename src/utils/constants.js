@@ -54,15 +54,13 @@ export const descriptionInput = document.querySelector(
 //PROFILE EDIT MODAL
 
 export const profileEditBtn = document.querySelector(".js-profile-edit-button");
-export const profileEditModal = document.querySelector(
-  ".js-profile-edit-modal"
-);
+export const profileEditModal = ".js-profile-edit-modal";
 export const profileEditForm = document.forms.profileform;
 
 //ADD CARD MODAL
 
 export const addNewCardBtn = document.querySelector(".profile__add-button");
-export const newCardModal = document.querySelector(".js-new-card-modal");
+export const newCardSelector = ".js-new-card-modal";
 export const newCardAddForm = document.forms.newcardform;
 export const imageTitle = document.querySelector("#title-image");
 export const imageUrl = document.querySelector("#image-url");
@@ -78,4 +76,4 @@ export const closeButtons = document.querySelectorAll(".modal__close");
 
 //EXPAND IMG MODAL
 
-export const expandImgModal = document.querySelector(".js-expand-img-modal");
+export const expandImgModal = ".js-expand-img-modal";

@@ -134,7 +134,7 @@ function handlePreviewImage(data) {
   imagePopup.open(data);
 }
 
-function handleDeleteCard(card, cardId) {
+function handleDeleteCard(cardId) {
   if (!cardId) {
     console.error("Card ID is undefined or missing. Unable to delete card.");
     return;
@@ -142,7 +142,7 @@ function handleDeleteCard(card, cardId) {
   api
     .deleteCard(cardId)
     .then(() => {
-      card.deleteCard();
+      cardId.deleteCard();
     })
     .catch((err) => {
       console.error(err);
@@ -190,8 +190,8 @@ function handleProfileEditSubmit(formInputs) {
     .updateProfileInfo(formInputs.newName, formInputs.newJob)
     .then((newUserData)=>{
       userInformation.setUserInfo({
-        name: newUserData.name,
-        job: newUserData.about,
+        newName: newUserData.name,
+        newJob: newUserData.about,
       })
       editProfile.close();
     })

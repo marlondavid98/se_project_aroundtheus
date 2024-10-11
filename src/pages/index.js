@@ -23,7 +23,7 @@ const api = new Api({
 //GET USER INFO
 
 api.getUserInfo().then((data) => {
-  userInformation.setUserInfo({ name: data.name, job: data.about });
+  userInformation.setUserInfo({ newName: data.name, newJob: data.about });
 });
 
 //GET INITIAL CARDS
@@ -171,25 +171,23 @@ function handleLikeClick(card, cardId, isLiked) {
   }
 }
 
-function handleAddCardFormSubmit(e, formInputs) {
-  e.preventDefault();
-  const { title, link } = formInputs;
-
+function handleAddCardFormSubmit(formInputs) {
+  //preventDefault();
+  
   api
-    .createNewCard(title, link)
+    .createNewCard(formInputs)
     .then((newCard) => {
       cardGeneration.addItem(createCard(newCard));
       newCardPopup.close();
-      e.target.reset();
       addCardFormValidator.disableBtn();
     })
-    .catch((err) => console.error(err));
+    //.catch((err) => console.error(err));
 }
 
-function handleProfileEditSubmit(e, formInputs) {
-  e.preventDefault();
+function handleProfileEditSubmit(formInputs) {
+  //preventDefault();
   api
-    .updateProfileInfo(formInputs.name, formInputs.description)
+    .updateProfileInfo(formInputs.newName, formInputs.newJob)
     .then((newUserData)=>{
       userInformation.setUserInfo({
         name: newUserData.name,
@@ -200,8 +198,8 @@ function handleProfileEditSubmit(e, formInputs) {
     .catch((err) => console.error(err));
 }
 
-function handleAvatarEditSubmit(e, formInputs) {
-  e.preventDefault
+function handleAvatarEditSubmit(formInputs) {
+ // e.preventDefault
   const {link} = formInputs;
   api 
     .updateAvatar(link)

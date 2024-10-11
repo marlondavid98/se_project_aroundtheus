@@ -42,7 +42,7 @@ const cardGeneration = new Section(
       cardGeneration.addItem(cardElement);
     },
   },
-  "cards__list"
+  constants.cardList
 );
 api
   .getAllinfo()

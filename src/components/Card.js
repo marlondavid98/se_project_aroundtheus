@@ -27,8 +27,8 @@ export default class Card {
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
       .cloneNode(true);
-    console.log(this._cardElement);
-    this._cardElement.querySelector(".card__title").textContent = this._name;
+
+    this._cardElement.querySelector(".card__text").textContent = this._name;
     this._cardElement.querySelector(".card__image").src = this._link;
     this._cardElement.querySelector(".card__image").alt = this._name;
 
@@ -77,7 +77,7 @@ export default class Card {
   _isLikedbyUser() {
     return this._likes.some((like) => like._id === this._userId);
   }
-
+*/
   _updateLikeStatus() {
     const likeButton = this._cardElement.querySelector(".card__like-button");
 
@@ -87,7 +87,7 @@ export default class Card {
       likeButton.classList.remove("card__like-button_active");
     }
   }
-
+/*
   deleteCard() {
     this._cardElement.remove();
     this._cardElement = null;

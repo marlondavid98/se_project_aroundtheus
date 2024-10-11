@@ -91,6 +91,13 @@ const addCardFormValidator = new FormValidator(
 );
 addCardFormValidator.enableValidation();
 
+const editAvatarFormValidator = new FormValidator(
+  constants.validationSettings,
+  constants.avatarEditForm
+);
+editAvatarFormValidator.enableValidation();
+
+
 //ADD CARD POPUPWITHFORM.JS
 
 const newCardPopup = new PopupWithForm(
@@ -114,6 +121,7 @@ const editAvatar = new PopupWithForm(
   handleAvatarEditSubmit
 )
 editAvatar.setEventListeners();
+
 
 //DELETE CARD FORMVALIDATOR.JS
 
@@ -221,10 +229,12 @@ constants.profileEditBtn.addEventListener("click", () => {
 
 constants.addNewCardBtn.addEventListener("click", () => {
   newCardPopup.open();
+  addCardFormValidator.toggleButtonState();
 });
 
 //OPEN EDIT AVATAR MODAL
 
 constants.editAvatarBtn.addEventListener("click", () => {
   editAvatar.open();
+  editAvatarFormValidator.toggleButtonState();
 });

@@ -55,6 +55,7 @@ export const descriptionInput = document.querySelector(
 
 export const avatarEditModal = ".js-profile-picture-modal"; //!!
 export const editAvatarBtn = document.querySelector(".profile__avatar-container"); //!!
+export const avatarEditForm = document.forms.newprofilepicform;
 
 //PROFILE EDIT MODAL
 

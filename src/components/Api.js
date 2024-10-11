@@ -15,7 +15,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
-    }).catch(this._handleRequest);
+    }).then(this._handleRequest);
   }
 
   getInitialCards() {
@@ -23,28 +23,28 @@ export default class Api {
       method: "GET",
       headers: this._headers,
     })
-      .catch(this._handleRequest);
+      .then(this._handleRequest);
   }
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/:${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).catch(this._handleRequest);
+    }).then(this._handleRequest);
   }
 
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/:${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    }).catch(this._handleRequest);
+    }).then(this._handleRequest);
   }
 
   dislikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/:${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }).catch(this._handleRequest);
+    }).then(this._handleRequest);
   }
 
   getAllinfo(){
@@ -59,7 +59,7 @@ export default class Api {
         name: name,
         about: job,
       }),
-    }).this(this._handleRequest);
+    }).then(this._handleRequest);
   }
 
   updateAvatar(avatarUrl) {
@@ -69,7 +69,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: avatarUrl,
       }),
-    }).this(this._handleRequest);
+    }).then(this._handleRequest);
   }
 
   createNewCard(data) {
@@ -77,7 +77,7 @@ export default class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify(data),
-    }).catch(this._handleRequest);
+    }).then(this._handleRequest);
   }
 }
 

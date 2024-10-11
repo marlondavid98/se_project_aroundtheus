@@ -1,6 +1,8 @@
 //IMPORTS
 
+import Api from "../components/Api.js";
 import * as constants from "../utils/constants.js";
+import PopupWithDelete from "../components/PopupWithDelete.js";
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
 import Section from "../components/Section.js";
@@ -9,19 +11,51 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 import "./index.css";
 
+//API IMPORT
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "3ffb0658-0b91-4d38-b182-fdf6c6b45774",
+    "Content-Type": "application/json",
+  },
+});
+
+//GET USER INFO
+
+api.getUserInfo().then((data) => {
+  userInformation.setUserInfo({ name: data.name, job: data.about });
+});
+
+//GET INITIAL CARDS
+
+api.getInitialCards().then((data) => {
+  cardGeneration.renderItems(data);
+});
+
 //SECTION.JS
 
 const cardGeneration = new Section(
   {
-    items: constants.initialCards,
+    items: [],
     renderer: (item) => {
       const cardElement = createCard(item);
       cardGeneration.addItem(cardElement);
     },
   },
-  constants.cardList // passing the already selected DOM element
+  "cards__list"
 );
-cardGeneration.renderItems();
+api
+  .getAllinfo()
+  .then(([userData, cardData]) => {
+    userInformation.setUserInfo({
+      name: userData.name,
+      job: userInformation.about,
+    });
+    cardGeneration.renderItems(cardData);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 //CARD.JS
 
@@ -29,9 +63,11 @@ function createCard(data) {
   const cardElement = new Card(
     data,
     constants.cardSelector,
-    handlePreviewImage
-  ).generateCard();
-  return cardElement;
+    handlePreviewImage,
+    handleDeleteCard,
+    handleLikeClick
+  );
+  return cardElement.getView();
 }
 
 //USER INFO
@@ -41,62 +77,156 @@ const userInformation = new UserInfo(
   constants.profileDescription
 );
 
-//EDIT PROFILE POPUPWITHFORM.JS
-
-const editProfile = new PopupWithForm(constants.profileEditModal, (data) => {
-  userInformation.setUserInfo(data);
-  editProfile.close();
-});
-
-editProfile.setEventListeners();
-
-//OPEN PROFILE EDIT MODAL
-
-constants.profileEditBtn.addEventListener("click", () => {
-  const { name, job } = userInformation.getUserInfo();
-
-  constants.titleInput.value = name;
-  constants.descriptionInput.value = job;
-
-  editProfile.open();
-  editProfileFormValidator.toggleButtonState();
-});
-
-//ADD CARD POPUPWITHFORM.JS
-
-const newCardPopup = new PopupWithForm(constants.newCardSelector, (data) => {
-  cardGeneration.addItem(createCard(data));
-  newCardPopup.close();
-});
-
-newCardPopup.setEventListeners();
-
-//OPEN ADD CARD MODAL
-
-constants.addNewCardBtn.addEventListener("click", () => {
-  newCardPopup.open();
-  addCardFormValidator.toggleButtonState();
-});
-
-//POPUPWITHIMAGE.JS
-
-const imagePopup = new PopupWithImage(constants.expandImgModal);
-imagePopup.setEventListeners();
-
-function handlePreviewImage(data) {
-  imagePopup.open(data);
-}
-
 //FORMVALIDATOR.JS
 
 const editProfileFormValidator = new FormValidator(
   constants.validationSettings,
   constants.profileEditForm
 );
+editProfileFormValidator.enableValidation();
+
 const addCardFormValidator = new FormValidator(
   constants.validationSettings,
   constants.newCardAddForm
 );
-
-editProfileFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
+
+//ADD CARD POPUPWITHFORM.JS
+
+const newCardPopup = new PopupWithForm(
+  constants.newCardSelector,
+  handleAddCardFormSubmit
+);
+newCardPopup.setEventListeners();
+
+//EDIT PROFILE POPUPWITHFORM.JS
+
+const editProfile = new PopupWithForm(
+  constants.profileEditModal,
+  handleProfileEditSubmit
+);
+editProfile.setEventListeners();
+
+//EDIT AVATAR POPUPWITHFORM.JS
+
+const editAvatar = new PopupWithForm(
+  constants.avatarEditModal,
+  handleAvatarEditSubmit
+)
+editAvatar.setEventListeners();
+
+//DELETE CARD FORMVALIDATOR.JS
+
+const deleteCardSelector = new PopupWithForm(
+  constants.deleteCardModal,
+  api.deleteCard
+)
+deleteCardSelector.setEventListeners();
+
+//POPUPWITHIMAGE.JS
+
+const imagePopup = new PopupWithImage(constants.expandImgModal);
+imagePopup.setEventListeners();
+
+//FUNCTIONS
+
+function handlePreviewImage(data) {
+  imagePopup.open(data);
+}
+
+function handleDeleteCard(card, cardId) {
+  if (!cardId) {
+    console.error("Card ID is undefined or missing. Unable to delete card.");
+    return;
+  }
+  api
+    .deleteCard(cardId)
+    .then(() => {
+      card.deleteCard();
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
+function handleLikeClick(card, cardId, isLiked) {
+  if (isLiked) {
+    api
+      .dislikeCard(cardId)
+      .then((newData) => {
+        card.updateLikes(newData.likes);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  } else {
+    api
+      .likeCard(cardId)
+      .then((newData) => {
+        card.updateLikes(newData.likes);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+}
+
+function handleAddCardFormSubmit(e, formInputs) {
+  e.preventDefault();
+  const { title, link } = formInputs;
+
+  api
+    .createNewCard(title, link)
+    .then((newCard) => {
+      cardGeneration.addItem(createCard(newCard));
+      newCardPopup.close();
+      e.target.reset();
+      addCardFormValidator.disableBtn();
+    })
+    .catch((err) => console.error(err));
+}
+
+function handleProfileEditSubmit(e, formInputs) {
+  e.preventDefault();
+  api
+    .updateProfileInfo(formInputs.name, formInputs.description)
+    .then((newUserData)=>{
+      userInformation.setUserInfo({
+        name: newUserData.name,
+        job: newUserData.about,
+      })
+      editProfile.close();
+    })
+    .catch((err) => console.error(err));
+}
+
+function handleAvatarEditSubmit(e, formInputs) {
+  e.preventDefault
+  const {link} = formInputs;
+  api 
+    .updateAvatar(link)
+    .catch((err) => console.error(err));
+}
+
+//EVENT LISTENERS 
+//OPEN PROFILE EDIT MODAL
+
+constants.profileEditBtn.addEventListener("click", () => {
+  const { name, job } = userInformation.getUserInfo();
+  constants.titleInput.value = name;
+  constants.descriptionInput.value = job;
+  editProfile.open();
+  editProfileFormValidator.toggleButtonState();
+});
+
+//OPEN ADD CARD MODAL
+
+constants.addNewCardBtn.addEventListener("click", () => {
+  newCardPopup.open();
+});
+
+//OPEN EDIT AVATAR MODAL
+
+constants.editAvatarBtn.addEventListener("click", () => {
+  editAvatar.open();
+});

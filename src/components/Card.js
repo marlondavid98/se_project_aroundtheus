@@ -1,18 +1,30 @@
 export default class Card {
-  constructor(data, cardSelector, handleImgClick) {
+  constructor(
+    data,
+    cardSelector,
+    handleImgClick,
+    handleDeleteClick,
+    handleLikeClick
+  ) {
     this._name = data.name;
     this._link = data.link;
-
+    this._id = data._id;
+    this._isLiked = data.isLiked;
     this._handleImgClick = handleImgClick;
-    this._data = data;
-
+    this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
     this._cardSelector = cardSelector;
+    this._data = data;
 
     this._element = this._getTemplate();
     this._likeBtn = this._element.querySelector(".card__like-button");
     this._deleteBtn = this._element.querySelector(".card__trash-button");
     this._cardImg = this._element.querySelector(".card__image");
   }
+
+  /*_isLikedbyUser() {
+    return this._likes.some((like) => like._id === this._userId);
+  }*/
 
   generateCard() {
     this._setEventListeners();
@@ -36,11 +48,55 @@ export default class Card {
     });
 
     this._deleteBtn.addEventListener("click", () => {
-      this._element.remove();
+      this._handleDeleteClick(this);
     });
 
     this._cardImg.addEventListener("click", () => {
       this._handleImgClick(this._data);
     });
   }
+
+
+
+  updateLikes(){
+    this._likeBtn.classList.toggle(".card__like-button_active");
+  }
+
+  /*
+  _isLikedbyUser() {
+    return this._likes.some((like) => like._id === this._userId);
+  }
+
+  _updateLikeStatus() {
+    const likeButton = this._cardElement.querySelector(".card__like-button");
+
+    if (this._isLiked) {
+      likeButton.classList.add("card__like-button_active");
+    } else {
+      likeButton.classList.remove("card__like-button_active");
+    }
+  }
+
+  deleteCard() {
+    this._cardElement.remove();
+    this._cardElement = null;
+  }
+getView() {
+    this._cardElement = document
+      .querySelector(this._cardSelector)
+      .content.querySelector(".card")
+      .cloneNode(true);
+
+    this._cardElement.querySelector(".card__title").textContent = this._name;
+    this._cardElement.querySelector(".card__image").src = this._link;
+    this._cardElement.querySelector(".card__image").alt = this._name;
+
+    this._updateLikeStatus();
+
+    this._setEventListeners();
+
+    return this._cardElement;
+  }
+
+  */
 }

@@ -97,7 +97,6 @@ const editAvatarFormValidator = new FormValidator(
 );
 editAvatarFormValidator.enableValidation();
 
-
 //ADD CARD POPUPWITHFORM.JS
 
 const newCardPopup = new PopupWithForm(
@@ -119,17 +118,15 @@ editProfile.setEventListeners();
 const editAvatar = new PopupWithForm(
   constants.avatarEditModal,
   handleAvatarEditSubmit
-)
+);
 editAvatar.setEventListeners();
 
+//DELETE CARD POPUPWITHDELETE.JS
 
-//DELETE CARD FORMVALIDATOR.JS
-
-const deleteCardSelector = new PopupWithForm(
+const deleteCardSelector = new PopupWithDelete(
   constants.deleteCardModal,
-  api.deleteCard
-)
-deleteCardSelector.setEventListeners();
+  handleConfirmDelete
+);
 
 //POPUPWITHIMAGE.JS
 
@@ -142,7 +139,14 @@ function handlePreviewImage(data) {
   imagePopup.open(data);
 }
 
-function handleDeleteCard(cardId) {
+function handleDeleteCard(card, cardId) {
+  const selectedCard = card;
+  const selectedCardId = cardId;
+  deleteCardSelector.open();
+  deleteCardSelector.setEventListeners(selectedCard, selectedCardId);
+}
+
+function handleConfirmDelete (card, cardId){
   if (!cardId) {
     console.error("Card ID is undefined or missing. Unable to delete card.");
     return;
@@ -150,7 +154,8 @@ function handleDeleteCard(cardId) {
   api
     .deleteCard(cardId)
     .then(() => {
-      cardId.deleteCard();
+      console.log(`Successfully deleted card with ID: ${cardId}`);
+      card.deleteCard();
     })
     .catch((err) => {
       console.error(err);
@@ -181,40 +186,36 @@ function handleLikeClick(card, cardId, isLiked) {
 
 function handleAddCardFormSubmit(formInputs) {
   //preventDefault();
-  
-  api
-    .createNewCard(formInputs)
-    .then((newCard) => {
-      cardGeneration.addItem(createCard(newCard));
-      newCardPopup.close();
-      addCardFormValidator.disableBtn();
-    })
-    //.catch((err) => console.error(err));
+
+  api.createNewCard(formInputs).then((newCard) => {
+    cardGeneration.addItem(createCard(newCard));
+    newCardPopup.close();
+    addCardFormValidator.disableBtn();
+  });
+  //.catch((err) => console.error(err));
 }
 
 function handleProfileEditSubmit(formInputs) {
   //preventDefault();
   api
     .updateProfileInfo(formInputs.newName, formInputs.newJob)
-    .then((newUserData)=>{
+    .then((newUserData) => {
       userInformation.setUserInfo({
         newName: newUserData.name,
         newJob: newUserData.about,
-      })
+      });
       editProfile.close();
     })
     .catch((err) => console.error(err));
 }
 
 function handleAvatarEditSubmit(formInputs) {
- // e.preventDefault
-  const {link} = formInputs;
-  api 
-    .updateAvatar(link)
-    .catch((err) => console.error(err));
+  // e.preventDefault
+  const { link } = formInputs;
+  api.updateAvatar(link).catch((err) => console.error(err));
 }
 
-//EVENT LISTENERS 
+//EVENT LISTENERS
 //OPEN PROFILE EDIT MODAL
 
 constants.profileEditBtn.addEventListener("click", () => {
@@ -238,3 +239,5 @@ constants.editAvatarBtn.addEventListener("click", () => {
   editAvatar.open();
   editAvatarFormValidator.toggleButtonState();
 });
+
+//OPEN CONFIRM DELETE MODAL

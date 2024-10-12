@@ -27,21 +27,21 @@ export default class Api {
   }
 
   deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/:${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._handleRequest);
   }
 
   likeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/:${cardId}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
     }).then(this._handleRequest);
   }
 
   dislikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/:${cardId}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._handleRequest);

@@ -10,19 +10,10 @@ export default class PopupWithDelete extends Popup {
   }
   setEventListeners(card, cardId) {
     super.setEventListeners();
-    console.log(card);
-    console.log(cardId);
-    console.log(this._popupForm);
     this._popupForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      console.log(hello);
       this._handleFormSubmit(card, cardId);
-      //this_popupElement.remove();
     });
-  }
-
-  /*setSubmitAction(action) {
-    this._handleFormSubmit = action;
   }
 
   /*setButtonText(isLoading, loadingText = "Deleting...") {

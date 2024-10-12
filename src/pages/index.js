@@ -156,6 +156,7 @@ function handleConfirmDelete (card, cardId){
     .then(() => {
       console.log(`Successfully deleted card with ID: ${cardId}`);
       card.deleteCard();
+      deleteCardSelector.close();
     })
     .catch((err) => {
       console.error(err);
@@ -213,6 +214,7 @@ function handleAvatarEditSubmit(formInputs) {
   // e.preventDefault
   const { link } = formInputs;
   api.updateAvatar(link).catch((err) => console.error(err));
+  editAvatar.close();
 }
 
 //EVENT LISTENERS
@@ -240,4 +242,3 @@ constants.editAvatarBtn.addEventListener("click", () => {
   editAvatarFormValidator.toggleButtonState();
 });
 
-//OPEN CONFIRM DELETE MODAL

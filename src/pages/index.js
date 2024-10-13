@@ -220,10 +220,10 @@ function handleAvatarEditSubmit(formInputs) {
   // e.preventDefault
   console.log(formInputs);
   api
-    .updateAvatar(formInputs.newLink)
-    .then((newAvatarLink) => {
+    .updateAvatar(formInputs)
+    .then(() => {
       avatarInformation.setAvatarInfo({
-        avatar: newAvatarLink.link,
+        avatar: avatarUrl,
       });
       editAvatar.close();
     })

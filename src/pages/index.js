@@ -212,7 +212,7 @@ function handleAddCardFormSubmit(formInputs) {
     .finally(() => {
       isFetching = false;
       newCardPopup.close();
-    });;
+    })
 }
 
 function handleProfileEditSubmit(formInputs) {

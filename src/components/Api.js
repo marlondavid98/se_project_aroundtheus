@@ -47,9 +47,9 @@ export default class Api {
     }).then(this._handleRequest);
   }
 
-  getAllinfo(){
+  /*getAllinfo(){
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
-  }
+  }*/
 
   updateProfileInfo(name, job) {
     return fetch(`${this._baseUrl}/users/me`, {

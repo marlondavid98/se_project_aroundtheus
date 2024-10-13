@@ -9,6 +9,7 @@ import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
+import AvatarInfo from "../components/AvatarInfo.js";
 import "./index.css";
 
 //API IMPORT
@@ -44,6 +45,7 @@ const cardGeneration = new Section(
   },
   constants.cardList
 );
+/*
 api
   .getAllinfo()
   .then(([userData, cardData]) => {
@@ -55,7 +57,7 @@ api
   })
   .catch((err) => {
     console.error(err);
-  });
+  });*/
 
 //CARD.JS
 
@@ -76,6 +78,10 @@ const userInformation = new UserInfo(
   constants.profileTitle,
   constants.profileDescription
 );
+
+//AVATAR INFO
+
+const avatarInformation = new AvatarInfo(constants.avatarImg);
 
 //FORMVALIDATOR.JS
 
@@ -146,7 +152,7 @@ function handleDeleteCard(card, cardId) {
   deleteCardSelector.setEventListeners(selectedCard, selectedCardId);
 }
 
-function handleConfirmDelete (card, cardId){
+function handleConfirmDelete(card, cardId) {
   if (!cardId) {
     console.error("Card ID is undefined or missing. Unable to delete card.");
     return;
@@ -212,9 +218,16 @@ function handleProfileEditSubmit(formInputs) {
 
 function handleAvatarEditSubmit(formInputs) {
   // e.preventDefault
-  const { link } = formInputs;
-  api.updateAvatar(link).catch((err) => console.error(err));
-  editAvatar.close();
+  console.log(formInputs);
+  api
+    .updateAvatar(formInputs.newLink)
+    .then((newAvatarLink) => {
+      avatarInformation.setAvatarInfo({
+        newLink: newAvatarLink.link,
+      });
+      editAvatar.close();
+    })
+    .catch((err) => console.error(err));
 }
 
 //EVENT LISTENERS
@@ -241,4 +254,3 @@ constants.editAvatarBtn.addEventListener("click", () => {
   editAvatar.open();
   editAvatarFormValidator.toggleButtonState();
 });
-

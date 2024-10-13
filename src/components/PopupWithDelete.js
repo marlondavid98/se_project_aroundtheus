@@ -6,7 +6,8 @@ export default class PopupWithDelete extends Popup {
     this._popupForm = this._popupElement.querySelector(".modal__form");
     this._submitBtn = this._popupElement.querySelector(".modal__button");
     this._handleFormSubmit = handleFormSubmit;
-    //this._btnText = this._submitBtn.textContent;
+
+    this._btnText = this._submitBtn.textContent;
   }
   setEventListeners(card, cardId) {
     super.setEventListeners();
@@ -16,11 +17,11 @@ export default class PopupWithDelete extends Popup {
     });
   }
 
-  /*setButtonText(isLoading, loadingText = "Deleting...") {
+  setButtonText(isLoading, loadingText = "Deleting...") {
     if (isLoading) {
       this._submitBtn.textContent = loadingText;
     } else {
       this._submitBtn.textContent = this._btnText;
     }
-  }*/
+  }
 }

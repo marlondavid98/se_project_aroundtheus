@@ -13,12 +13,15 @@ export default class PopupWithDelete extends Popup {
     super.setEventListeners();
     this._popupForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      this._setButtonText();
       this._handleFormSubmit(card, cardId);
     });
   }
 
-  setButtonText(isLoading, loadingText = "Deleting...") {
-    if (isLoading) {
+  _setButtonText() {
+    const isFetching = useQuery('DELETE', fetchPost)
+    const loadingText = "Deleting...";
+    if (isFetching ) {
       this._submitBtn.textContent = loadingText;
     } else {
       this._submitBtn.textContent = this._btnText;

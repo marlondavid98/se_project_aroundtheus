@@ -9,9 +9,9 @@ export default class AvatarInfo {
       };
     }
   
-    setAvatarInfo({ newLink }) {
-      if (newLink) {
-        this._img.src = newLink;
+    setAvatarInfo({ avatar }) {
+      if (avatar) {
+        this._img.src = avatar;
       }
     }
   }

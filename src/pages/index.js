@@ -153,9 +153,9 @@ function handleDeleteCard(card, cardId) {
 }
 
 function handleConfirmDelete(card, cardId) {
-  if (isFetching) return; 
-  isFetching = true;
-  deleteCardSelector.setButtonText(isFetching);
+  //if (isFetching) return; 
+  //isFetching = true;
+  //deleteCardSelector.setButtonText(isFetching);
   if (!cardId) {
     console.error("Card ID is undefined or missing. Unable to delete card.");
     return;
@@ -168,11 +168,12 @@ function handleConfirmDelete(card, cardId) {
     })
     .catch((err) => {
       console.error(err);
-    })
-    .finally(() => {
-      isFetching = false;
-      deleteCardSelector.close();
     });
+    /*.finally(() => {
+      isFetching = false;
+      deleteCardSelector.setButtonText(isFetching);
+      deleteCardSelector.close();
+    });*/
 }
 
 function handleLikeClick(card, cardId, isLiked) {
@@ -211,7 +212,7 @@ function handleAddCardFormSubmit(formInputs) {
     .catch((err) => console.error(err))
     .finally(() => {
       isFetching = false;
-      newCardPopup.setButtonText(false);
+      newCardPopup.setButtonText(isFetching);
       newCardPopup.close();
     })
 }

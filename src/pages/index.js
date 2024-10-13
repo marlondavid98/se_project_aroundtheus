@@ -223,7 +223,7 @@ function handleAvatarEditSubmit(formInputs) {
     .updateAvatar(formInputs.newLink)
     .then((newAvatarLink) => {
       avatarInformation.setAvatarInfo({
-        newLink: newAvatarLink.link,
+        avatar: newAvatarLink.link,
       });
       editAvatar.close();
     })

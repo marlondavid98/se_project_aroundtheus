@@ -211,6 +211,7 @@ function handleAddCardFormSubmit(formInputs) {
     .catch((err) => console.error(err))
     .finally(() => {
       isFetching = false;
+      newCardPopup.setButtonText(false);
       newCardPopup.close();
     })
 }

@@ -1,5 +1,5 @@
 //IMPORTS
-
+let isFetching = false;
 import Api from "../components/Api.js";
 import * as constants from "../utils/constants.js";
 import PopupWithDelete from "../components/PopupWithDelete.js";
@@ -153,6 +153,9 @@ function handleDeleteCard(card, cardId) {
 }
 
 function handleConfirmDelete(card, cardId) {
+  if (isFetching) return; 
+  isFetching = true;
+  deleteCardSelector.setButtonText(isFetching);
   if (!cardId) {
     console.error("Card ID is undefined or missing. Unable to delete card.");
     return;
@@ -162,10 +165,13 @@ function handleConfirmDelete(card, cardId) {
     .then(() => {
       console.log(`Successfully deleted card with ID: ${cardId}`);
       card.deleteCard();
-      deleteCardSelector.close();
     })
     .catch((err) => {
       console.error(err);
+    })
+    .finally(() => {
+      isFetching = false;
+      deleteCardSelector.close();
     });
 }
 
@@ -192,14 +198,21 @@ function handleLikeClick(card, cardId, isLiked) {
 }
 
 function handleAddCardFormSubmit(formInputs) {
-  //preventDefault();
+  if (isFetching) return; 
+  isFetching = true;
+  newCardPopup.setButtonText(isFetching);
 
-  api.createNewCard(formInputs).then((newCard) => {
-    cardGeneration.addItem(createCard(newCard));
-    newCardPopup.close();
-    addCardFormValidator.disableBtn();
-  });
-  //.catch((err) => console.error(err));
+  api
+    .createNewCard(formInputs)
+    .then((newCard) => {
+      cardGeneration.addItem(createCard(newCard));
+      addCardFormValidator.disableBtn();
+    })
+    .catch((err) => console.error(err))
+    .finally(() => {
+      isFetching = false;
+      newCardPopup.close();
+    });;
 }
 
 function handleProfileEditSubmit(formInputs) {
@@ -211,20 +224,16 @@ function handleProfileEditSubmit(formInputs) {
         newName: newUserData.name,
         newJob: newUserData.about,
       });
-      editProfile.close();
+      //editProfile.close();
     })
     .catch((err) => console.error(err));
 }
 
-function handleAvatarEditSubmit(formInputs) {
-  // e.preventDefault
-  console.log(formInputs);
+function handleAvatarEditSubmit({ link }) {
   api
-    .updateAvatar(formInputs)
-    .then(() => {
-      avatarInformation.setAvatarInfo({
-        avatar: formInputs,
-      });
+    .updateAvatar(link)
+    .then(({ avatar }) => {
+      avatarInformation.setAvatarInfo({ avatar });
       editAvatar.close();
     })
     .catch((err) => console.error(err));

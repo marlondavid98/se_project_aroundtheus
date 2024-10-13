@@ -88,3 +88,7 @@ export const closeButtons = document.querySelectorAll(".modal__close");
 //EXPAND IMG MODAL
 
 export const expandImgModal = ".js-expand-img-modal";
+
+//IS FETCHING
+
+export let isFetching = false;

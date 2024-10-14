@@ -24,13 +24,13 @@ export default class Card {
       .content.querySelector(".card")
       .cloneNode(true);*/
 
+    this._cardImg = this._cardElement.querySelector(".card__image");
     this._cardElement.querySelector(".card__text").textContent = this._name;
     this._cardElement.querySelector(".card__image").src = this._link;
     this._cardElement.querySelector(".card__image").alt = this._name;
 
     this._likeBtn = this._cardElement.querySelector(".card__like-button");
     this._deleteBtn = this._cardElement.querySelector(".card__trash-button");
-    this._cardImg = this._cardElement.querySelector(".card__image");
 
     this._updateLikeStatus();
 
@@ -52,9 +52,6 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector(".card__image").src = this._link;
-    this._element.querySelector(".card__image").alt = this._name;
-    this._element.querySelector(".card__text").textContent = this._name;
 
     this._likeBtn.addEventListener("click", () => {
       this._likeBtn.classList.toggle("card__like-button_active");

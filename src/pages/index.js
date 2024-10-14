@@ -135,7 +135,7 @@ const deleteCardSelector = new PopupWithDelete(
   constants.deleteCardModal,
   handleConfirmDelete
 );
-
+deleteCardSelector.setEventListeners();
 //POPUPWITHIMAGE.JS
 
 const imagePopup = new PopupWithImage(constants.expandImgModal);
@@ -154,7 +154,6 @@ function handleDeleteCard(card, cardId) {
     handleConfirmDelete(card, cardId)
   })
   deleteCardSelector.open();
-  deleteCardSelector.setEventListeners(selectedCard, selectedCardId);
 }
 
 function handleConfirmDelete(card, cardId) {
@@ -170,6 +169,7 @@ function handleConfirmDelete(card, cardId) {
     .then(() => {
       console.log(`Successfully deleted card with ID: ${cardId}`);
       card.deleteCard();
+      deleteCardSelector.close();
     })
     .catch((err) => {
       console.error(err);
@@ -177,7 +177,6 @@ function handleConfirmDelete(card, cardId) {
     .finally(() => {
       isFetching = false;
       deleteCardSelector.setButtonText(isFetching);
-      deleteCardSelector.close();
     });
 }
 
@@ -213,12 +212,12 @@ function handleAddCardFormSubmit(formInputs) {
     .then((newCard) => {
       cardGeneration.addItem(createCard(newCard));
       addCardFormValidator.disableBtn();
+      newCardPopup.close();
     })
     .catch((err) => console.error(err))
     .finally(() => {
       isFetching = false;
       newCardPopup.setButtonText(isFetching);
-      newCardPopup.close();
     })
 }
 
@@ -234,13 +233,12 @@ function handleProfileEditSubmit(formInputs) {
         newName: newUserData.name,
         newJob: newUserData.about,
       });
-      //editProfile.close();
+      editProfile.close();
     })
     .catch((err) => console.error(err))
     .finally(() => {
       isFetching = false;
       editProfile.setButtonText(isFetching);
-      editProfile.close();
     });
 }
 
@@ -252,12 +250,12 @@ function handleAvatarEditSubmit({ link }) {
     .updateAvatar(link)
     .then(({ avatar }) => {
       avatarInformation.setAvatarInfo({ avatar });
+      editAvatar.close();
     })
     .catch((err) => console.error(err))
     .finally(() => {
       isFetching = false;
       editAvatar.setButtonText(isFetching);
-      editAvatar.close();
     });
 }
 

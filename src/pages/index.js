@@ -9,7 +9,6 @@ import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
-import AvatarInfo from "../components/AvatarInfo.js";
 import "./index.css";
 
 //API IMPORT
@@ -84,7 +83,7 @@ const userInformation = new UserInfo(
 
 //AVATAR INFO
 
-const avatarInformation = new AvatarInfo(constants.avatarImg);
+const avatarInformation = new UserInfo("","",constants.avatarImg);
 
 //FORMVALIDATOR.JS
 

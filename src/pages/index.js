@@ -23,8 +23,11 @@ const api = new Api({
 
 //GET USER INFO
 
-api.getUserInfo().then((data) => {
-  userInformation.setUserInfo({ newName: data.name, newJob: data.about });
+api
+.getUserInfo()
+  .then((data) => {
+    userInformation.setUserInfo({ newName: data.name, newJob: data.about })
+    avatarInformation.setAvatarInfo({avatar: data.avatar});
 });
 
 //GET INITIAL CARDS

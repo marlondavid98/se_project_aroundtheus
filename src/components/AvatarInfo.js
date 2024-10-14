@@ -14,4 +14,13 @@ export default class AvatarInfo {
         this._img.src = avatar;
       }
     }
+
+    setButtonText(isFetching) {
+      const loadingText = "Saving...";
+      if (isFetching) {
+        this._submitBtn.textContent = loadingText;
+      } else {
+        this._submitBtn.textContent = "Save";
+      }
+    }
   }

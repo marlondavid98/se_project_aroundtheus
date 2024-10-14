@@ -148,6 +148,9 @@ function handlePreviewImage(data) {
 function handleDeleteCard(card, cardId) {
   const selectedCard = card;
   const selectedCardId = cardId;
+  deleteCardSelector.setSubmitFunction(()=>{
+    handleConfirmDelete(card, cardId)
+  })
   deleteCardSelector.open();
   deleteCardSelector.setEventListeners(selectedCard, selectedCardId);
 }
@@ -218,7 +221,10 @@ function handleAddCardFormSubmit(formInputs) {
 }
 
 function handleProfileEditSubmit(formInputs) {
-  //preventDefault();
+  if (isFetching) return; 
+  isFetching = true;
+  editProfile.setButtonText(isFetching);
+
   api
     .updateProfileInfo(formInputs.newName, formInputs.newJob)
     .then((newUserData) => {
@@ -228,17 +234,29 @@ function handleProfileEditSubmit(formInputs) {
       });
       //editProfile.close();
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err))
+    .finally(() => {
+      isFetching = false;
+      editProfile.setButtonText(isFetching);
+      editProfile.close();
+    });
 }
 
 function handleAvatarEditSubmit({ link }) {
+  if (isFetching) return; 
+  isFetching = true;
+  editAvatar.setButtonText(isFetching);
   api
     .updateAvatar(link)
     .then(({ avatar }) => {
       avatarInformation.setAvatarInfo({ avatar });
-      editAvatar.close();
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err))
+    .finally(() => {
+      isFetching = false;
+      editAvatar.setButtonText(isFetching);
+      editAvatar.close();
+    });
 }
 
 //EVENT LISTENERS

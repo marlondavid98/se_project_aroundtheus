@@ -25,4 +25,8 @@ export default class PopupWithDelete extends Popup {
       this._submitBtn.textContent = "Yes";
     }
   }
+
+  setSubmitFunction(submitFunction){
+    this._handleFormSubmit = submitFunction;
+  }
 }

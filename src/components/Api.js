@@ -4,6 +4,11 @@ export default class Api {
     this._headers = headers;
   }
 
+  _request(urlEnd, options) {
+    return fetch(this._baseUrl+urlEnd, options)
+    .then(this._handleRequest)
+  }
+
   _handleRequest(res) {
     if (!res.ok) {
       return Promise.reject(`Error: ${res.status}`);
@@ -11,14 +16,16 @@ export default class Api {
     return res.json();
   }
 
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+  getUserInfo(endUrl, options) {
+    return this._request(endUrl,options);
+    /*return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
-    }).then(this._handleRequest);
+    }).then(this._handleRequest);*/
   }
 
-  getInitialCards() {
+  getInitialCards(endUrl, options) {
+  //  return this._request(endUrl, options);
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: this._headers,
@@ -26,14 +33,19 @@ export default class Api {
       .then(this._handleRequest);
   }
 
-  deleteCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+  deleteCard(endUrl, options) {
+    return this._request(endUrl, options);
+    /*
+     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._handleRequest);
+  }*/
   }
 
   likeCard(cardId) {
+    //return this._request(endUrl,method);
+    console.log(this._headers);
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
@@ -41,6 +53,7 @@ export default class Api {
   }
 
   dislikeCard(cardId) {
+    //return this._request(endUrl,method);
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
@@ -72,7 +85,7 @@ export default class Api {
     }).then(this._handleRequest);
   }
 
-  createNewCard(data) {
+  createNewCard(endUrl, method, data) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,

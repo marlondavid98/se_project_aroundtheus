@@ -12,26 +12,40 @@ import UserInfo from "../components/UserInfo.js";
 import "./index.css";
 
 //API IMPORT
+
+const baseUrl = "https://around-api.en.tripleten-services.com/v1"
+const headers = {
+  authorization: "3ffb0658-0b91-4d38-b182-fdf6c6b45774",
+  "Content-Type": "application/json",
+}
 const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "3ffb0658-0b91-4d38-b182-fdf6c6b45774",
-    "Content-Type": "application/json",
-  },
+  baseUrl: baseUrl,
+  headers: headers,
 });
 
 //GET USER INFO
-
+const userInfoUrlEnd = "/users/me";
+const userOptions = {
+  method: "GET",
+  headers: headers
+}
 api
-.getUserInfo()
+.getUserInfo(userInfoUrlEnd,userOptions)
   .then((data) => {
     userInformation.setUserInfo({ newName: data.name, newJob: data.about })
     avatarInformation.setAvatarInfo({avatar: data.avatar});
 });
 
 //GET INITIAL CARDS
-
-api.getInitialCards().then((data) => {
+const initialCardsUrlEnd = "/users/me";
+const initialCardOptions = {
+  method: "GET",
+  headers: headers
+}
+api
+//.getInitialCards(initialCardsUrlEnd,initialCardOptions)
+.getInitialCards()
+.then((data) => {
   cardGeneration.renderItems(data);
 });
 
@@ -47,19 +61,6 @@ const cardGeneration = new Section(
   },
   constants.cardList
 );
-/*
-api
-  .getAllinfo()
-  .then(([userData, cardData]) => {
-    userInformation.setUserInfo({
-      name: userData.name,
-      job: userInformation.about,
-    });
-    cardGeneration.renderItems(cardData);
-  })
-  .catch((err) => {
-    console.error(err);
-  });*/
 
 //CARD.JS
 
@@ -148,8 +149,6 @@ function handlePreviewImage(data) {
 }
 
 function handleDeleteCard(card, cardId) {
-  const selectedCard = card;
-  const selectedCardId = cardId;
   deleteCardSelector.setSubmitFunction(()=>{
     handleConfirmDelete(card, cardId)
   })
@@ -157,6 +156,11 @@ function handleDeleteCard(card, cardId) {
 }
 
 function handleConfirmDelete(card, cardId) {
+  const endUrl= "/cards/"+cardId;
+  const options= {
+    method: "DELETE", 
+    header: headers}
+    
   if (isFetching) return; 
   isFetching = true;
   deleteCardSelector.setButtonText(isFetching);
@@ -165,7 +169,7 @@ function handleConfirmDelete(card, cardId) {
     return;
   }
   api
-    .deleteCard(cardId)
+    .deleteCard(endUrl,options)
     .then(() => {
       console.log(`Successfully deleted card with ID: ${cardId}`);
       card.deleteCard();
@@ -181,6 +185,9 @@ function handleConfirmDelete(card, cardId) {
 }
 
 function handleLikeClick(card, cardId, isLiked) {
+  const endUrl= "/cards/"+cardId+"/likes";
+  const likeMethod= `"PUT"`;
+  const dislikeMethod= `"DELETE"`;
   if (isLiked) {
     api
       .dislikeCard(cardId)
@@ -203,12 +210,14 @@ function handleLikeClick(card, cardId, isLiked) {
 }
 
 function handleAddCardFormSubmit(formInputs) {
+  const endUrl= "/cards";
+  const method= "POST";
   if (isFetching) return; 
   isFetching = true;
   newCardPopup.setButtonText(isFetching);
 
   api
-    .createNewCard(formInputs)
+    .createNewCard(endUrl, method, formInputs)
     .then((newCard) => {
       cardGeneration.addItem(createCard(newCard));
       addCardFormValidator.disableBtn();

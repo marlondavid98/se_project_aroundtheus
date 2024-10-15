@@ -18,14 +18,10 @@ export default class Api {
 
   getUserInfo(endUrl, options) {
     return this._request(endUrl,options);
-    /*return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: this._headers,
-    }).then(this._handleRequest);*/
+    
   }
 
   getInitialCards(endUrl, options) {
-  //  return this._request(endUrl, options);
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: this._headers,
@@ -35,62 +31,26 @@ export default class Api {
 
   deleteCard(endUrl, options) {
     return this._request(endUrl, options);
-    /*
-     return fetch(`${this._baseUrl}/cards/${cardId}`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(this._handleRequest);
-  }*/
   }
 
-  likeCard(cardId) {
-    //return this._request(endUrl,method);
-    console.log(this._headers);
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then(this._handleRequest);
+  likeCard(endUrl, likeOptions) {
+    return this._request(endUrl, likeOptions);
   }
 
-  dislikeCard(cardId) {
-    //return this._request(endUrl,method);
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(this._handleRequest);
+  dislikeCard(endUrl, disLikeOptions) {
+    return this._request(endUrl, disLikeOptions);
   }
 
-  /*getAllinfo(){
-    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
-  }*/
-
-  updateProfileInfo(name, job) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        name: name,
-        about: job,
-      }),
-    }).then(this._handleRequest);
+  updateProfileInfo(endUrl, options) {
+    return this._request(endUrl, options);
   }
 
-  updateAvatar(avatarUrl) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: avatarUrl,
-      }),
-    }).then(this._handleRequest);
+  updateAvatar(endUrl, options) {
+    return this._request(endUrl, options);
   }
 
-  createNewCard(endUrl, method, data) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: "POST",
-      headers: this._headers,
-      body: JSON.stringify(data),
-    }).then(this._handleRequest);
+  createNewCard(endUrl, options) {
+    return this._request(endUrl, options)
   }
 }
 

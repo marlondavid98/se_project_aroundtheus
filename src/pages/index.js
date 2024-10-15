@@ -37,13 +37,7 @@ api
 });
 
 //GET INITIAL CARDS
-const initialCardsUrlEnd = "/users/me";
-const initialCardOptions = {
-  method: "GET",
-  headers: headers
-}
 api
-//.getInitialCards(initialCardsUrlEnd,initialCardOptions)
 .getInitialCards()
 .then((data) => {
   cardGeneration.renderItems(data);
@@ -159,7 +153,7 @@ function handleConfirmDelete(card, cardId) {
   const endUrl= "/cards/"+cardId;
   const options= {
     method: "DELETE", 
-    header: headers}
+    headers: headers}
     
   if (isFetching) return; 
   isFetching = true;
@@ -186,11 +180,17 @@ function handleConfirmDelete(card, cardId) {
 
 function handleLikeClick(card, cardId, isLiked) {
   const endUrl= "/cards/"+cardId+"/likes";
-  const likeMethod= `"PUT"`;
-  const dislikeMethod= `"DELETE"`;
+  const likeOptions={
+    method: "PUT",
+    headers: headers
+  }
+  const disLikeOptions={
+    method: "DELETE",
+    headers: headers,
+  }
   if (isLiked) {
     api
-      .dislikeCard(cardId)
+      .dislikeCard(endUrl, disLikeOptions)
       .then((newData) => {
         card.updateLikes(newData.likes);
       })
@@ -199,7 +199,7 @@ function handleLikeClick(card, cardId, isLiked) {
       });
   } else {
     api
-      .likeCard(cardId)
+      .likeCard(endUrl, likeOptions)
       .then((newData) => {
         card.updateLikes(newData.likes);
       })
@@ -211,13 +211,18 @@ function handleLikeClick(card, cardId, isLiked) {
 
 function handleAddCardFormSubmit(formInputs) {
   const endUrl= "/cards";
-  const method= "POST";
+  const options={
+    method:"POST",
+    headers: headers,
+    body: JSON.stringify(formInputs)
+  };
+  
   if (isFetching) return; 
   isFetching = true;
   newCardPopup.setButtonText(isFetching);
 
   api
-    .createNewCard(endUrl, method, formInputs)
+    .createNewCard(endUrl, options)
     .then((newCard) => {
       cardGeneration.addItem(createCard(newCard));
       addCardFormValidator.disableBtn();
@@ -231,12 +236,21 @@ function handleAddCardFormSubmit(formInputs) {
 }
 
 function handleProfileEditSubmit(formInputs) {
+  const endUrl = "/users/me";
+  const options = {
+    method: "PATCH",
+    headers: headers,
+    body: JSON.stringify({
+      name: formInputs.newName, 
+      about: formInputs.newJob
+    })
+  };
   if (isFetching) return; 
   isFetching = true;
   editProfile.setButtonText(isFetching);
 
   api
-    .updateProfileInfo(formInputs.newName, formInputs.newJob)
+    .updateProfileInfo(endUrl, options)
     .then((newUserData) => {
       userInformation.setUserInfo({
         newName: newUserData.name,
@@ -252,11 +266,20 @@ function handleProfileEditSubmit(formInputs) {
 }
 
 function handleAvatarEditSubmit({ link }) {
+  const endUrl= "/users/me/avatar";
+  const options= {
+    method: "PATCH",
+    headers: headers,
+    body: JSON.stringify({
+      avatar: link,
+    })
+  };
+
   if (isFetching) return; 
   isFetching = true;
   editAvatar.setButtonText(isFetching);
   api
-    .updateAvatar(link)
+    .updateAvatar(endUrl, options)
     .then(({ avatar }) => {
       avatarInformation.setAvatarInfo({ avatar });
       editAvatar.close();

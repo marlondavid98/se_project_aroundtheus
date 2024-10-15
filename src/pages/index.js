@@ -24,13 +24,8 @@ const api = new Api({
 });
 
 //GET USER INFO
-const userInfoUrlEnd = "/users/me";
-const userOptions = {
-  method: "GET",
-  headers: headers
-}
 api
-.getUserInfo(userInfoUrlEnd,userOptions)
+.getUserInfo()
   .then((data) => {
     userInformation.setUserInfo({ newName: data.name, newJob: data.about })
     avatarInformation.setAvatarInfo({avatar: data.avatar});
@@ -155,12 +150,7 @@ function handleDeleteCard(card, cardId) {
   deleteCardSelector.open();
 }
 
-function handleConfirmDelete(card, cardId) {
-  const endUrl= "/cards/"+cardId;
-  const options= {
-    method: "DELETE", 
-    headers: headers}
-    
+function handleConfirmDelete(card, cardId) { 
   if (isFetching) return; 
   isFetching = true;
   deleteCardSelector.setButtonText(isFetching);
@@ -169,7 +159,7 @@ function handleConfirmDelete(card, cardId) {
     return;
   }
   api
-    .deleteCard(endUrl,options)
+    .deleteCard(cardId)
     .then(() => {
       console.log(`Successfully deleted card with ID: ${cardId}`);
       card.deleteCard();
@@ -185,29 +175,20 @@ function handleConfirmDelete(card, cardId) {
 }
 
 function handleLikeClick(card, cardId, isLiked) {
-  const endUrl= "/cards/"+cardId+"/likes";
-  const likeOptions={
-    method: "PUT",
-    headers: headers
-  }
-  const disLikeOptions={
-    method: "DELETE",
-    headers: headers,
-  }
   if (isLiked) {
     api
-      .dislikeCard(endUrl, disLikeOptions)
-      .then((data) => {
-        card.updateLikes(data.likes);
+      .dislikeCard(cardId)
+      .then(() => {
+        card.updateLikes();
       })
       .catch((err) => {
         console.error(err);
       });
   } else {
     api
-      .likeCard(endUrl, likeOptions)
-      .then((data) => {
-        card.updateLikes(data.likes);
+      .likeCard(cardId)
+      .then(() => {
+        card.updateLikes();
       })
       .catch((err) => {
         console.error(err);
@@ -216,19 +197,11 @@ function handleLikeClick(card, cardId, isLiked) {
 }
 
 function handleAddCardFormSubmit(formInputs) {
-  const endUrl= "/cards";
-  const options={
-    method:"POST",
-    headers: headers,
-    body: JSON.stringify(formInputs)
-  };
-  
   if (isFetching) return; 
   isFetching = true;
   newCardPopup.setButtonText(isFetching);
-
   api
-    .createNewCard(endUrl, options)
+    .createNewCard(formInputs)
     .then((newCard) => {
       cardGeneration.addItem(createCard(newCard));
       addCardFormValidator.disableBtn();
@@ -243,21 +216,12 @@ function handleAddCardFormSubmit(formInputs) {
 }
 
 function handleProfileEditSubmit(formInputs) {
-  const endUrl = "/users/me";
-  const options = {
-    method: "PATCH",
-    headers: headers,
-    body: JSON.stringify({
-      name: formInputs.newName, 
-      about: formInputs.newJob
-    })
-  };
   if (isFetching) return; 
   isFetching = true;
   editProfile.setButtonText(isFetching);
 
   api
-    .updateProfileInfo(endUrl, options)
+    .updateProfileInfo(formInputs.newName, formInputs.newJob)
     .then((newUserData) => {
       userInformation.setUserInfo({
         newName: newUserData.name,
@@ -274,20 +238,11 @@ function handleProfileEditSubmit(formInputs) {
 }
 
 function handleAvatarEditSubmit({ link }) {
-  const endUrl= "/users/me/avatar";
-  const options= {
-    method: "PATCH",
-    headers: headers,
-    body: JSON.stringify({
-      avatar: link,
-    })
-  };
-
   if (isFetching) return; 
   isFetching = true;
   editAvatar.setButtonText(isFetching);
   api
-    .updateAvatar(endUrl, options)
+    .updateAvatar(link)
     .then(({ avatar }) => {
       avatarInformation.setAvatarInfo({ avatar });
       editAvatar.close();

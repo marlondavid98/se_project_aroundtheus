@@ -4,9 +4,14 @@ export default class Api {
     this._headers = headers;
   }
 
-  _request(urlEnd, options) {
-    return fetch(this._baseUrl+urlEnd, options)
-    .then(this._handleRequest)
+  _request(urlEnd,options ={}){
+    const finalOptions = {
+      headers: this._headers,
+      ...options,
+    }
+
+    const url = `${this._baseUrl}${urlEnd}`;
+    return fetch(url, finalOptions).then(this._handleRequest);
   }
 
   _handleRequest(res) {
@@ -16,41 +21,41 @@ export default class Api {
     return res.json();
   }
 
-  getUserInfo(endUrl, options) {
-    return this._request(endUrl,options);
-    
+  getUserInfo() {
+    return this._request("/users/me", {method: "GET"})
   }
 
-  getInitialCards(endUrl, options) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: "GET",
-      headers: this._headers,
-    })
-      .then(this._handleRequest);
+  getInitialCards() {
+    return this._request(`/cards`, {method: "GET"})
   }
 
-  deleteCard(endUrl, options) {
-    return this._request(endUrl, options);
+  deleteCard(cardId) {
+    return this._request("/cards/"+cardId, {method: "DELETE"})
   }
 
-  likeCard(endUrl, likeOptions) {
-    return this._request(endUrl, likeOptions);
+  likeCard(cardId) {
+    return this._request("/cards/"+cardId+"/likes", {method: "PUT"})
   }
 
-  dislikeCard(endUrl, disLikeOptions) {
-    return this._request(endUrl, disLikeOptions);
+  dislikeCard(cardId) {
+    return this._request("/cards/"+cardId+"/likes", {method: "DELETE"})
   }
 
-  updateProfileInfo(endUrl, options) {
-    return this._request(endUrl, options);
+  updateProfileInfo(newName, newJob) {
+    return this._request("/users/me", {method: "PATCH", body: JSON.stringify({
+      name: newName, 
+      about: newJob
+    }) })
   }
 
-  updateAvatar(endUrl, options) {
-    return this._request(endUrl, options);
+  updateAvatar(link) {
+    return this._request("/users/me/avatar", {method: "PATCH",body: JSON.stringify({
+      avatar: link,
+    })})
   }
 
-  createNewCard(endUrl, options) {
-    return this._request(endUrl, options)
+  createNewCard(formInputs) {
+   return this._request("/cards", {method:"POST", body: JSON.stringify(formInputs)})
   }
 }
 

@@ -34,6 +34,9 @@ api
   .then((data) => {
     userInformation.setUserInfo({ newName: data.name, newJob: data.about })
     avatarInformation.setAvatarInfo({avatar: data.avatar});
+})
+.catch((err) => {
+  console.error(err);
 });
 
 //GET INITIAL CARDS
@@ -41,6 +44,9 @@ api
 .getInitialCards()
 .then((data) => {
   cardGeneration.renderItems(data);
+})
+.catch((err) => {
+  console.error(err);
 });
 
 //SECTION.JS
@@ -191,8 +197,8 @@ function handleLikeClick(card, cardId, isLiked) {
   if (isLiked) {
     api
       .dislikeCard(endUrl, disLikeOptions)
-      .then((newData) => {
-        card.updateLikes(newData.likes);
+      .then((data) => {
+        card.updateLikes(data.likes);
       })
       .catch((err) => {
         console.error(err);
@@ -200,8 +206,8 @@ function handleLikeClick(card, cardId, isLiked) {
   } else {
     api
       .likeCard(endUrl, likeOptions)
-      .then((newData) => {
-        card.updateLikes(newData.likes);
+      .then((data) => {
+        card.updateLikes(data.likes);
       })
       .catch((err) => {
         console.error(err);
@@ -227,6 +233,7 @@ function handleAddCardFormSubmit(formInputs) {
       cardGeneration.addItem(createCard(newCard));
       addCardFormValidator.disableBtn();
       newCardPopup.close();
+      constants.newCardAddForm.reset();
     })
     .catch((err) => console.error(err))
     .finally(() => {
@@ -257,6 +264,7 @@ function handleProfileEditSubmit(formInputs) {
         newJob: newUserData.about,
       });
       editProfile.close();
+      constants.profileEditForm.reset();
     })
     .catch((err) => console.error(err))
     .finally(() => {
@@ -283,6 +291,7 @@ function handleAvatarEditSubmit({ link }) {
     .then(({ avatar }) => {
       avatarInformation.setAvatarInfo({ avatar });
       editAvatar.close();
+      constants.avatarEditForm.reset();
     })
     .catch((err) => console.error(err))
     .finally(() => {

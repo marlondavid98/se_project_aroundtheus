@@ -8,8 +8,11 @@ export default class FormValidator {
 
     this._form = formElement;
     this._inputElements = [...this._form.querySelectorAll(this._inputSelector)];
-  }
 
+    //this._handleInput = this._handleInput.bind(this);
+    //this._handleSubmit = this._handleSubmit.bind(this);
+  }
+  
   _showInputError(inputElement) {
     // #some-id-error
     const errorElement = this._form.querySelector(`#${inputElement.id}-error`);

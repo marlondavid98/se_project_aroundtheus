@@ -33,7 +33,7 @@ export default class PopupWithForm extends Popup {
     if (isFetching) {
       this._submitBtn.textContent = loadingText;
     } else {
-      this._submitBtn.textContent = "Save";
+      this._submitBtn.textContent = this._buttonText;;
     }
   }
 

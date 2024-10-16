@@ -28,7 +28,7 @@ api
 .getUserInfo()
   .then((data) => {
     userInformation.setUserInfo({ newName: data.name, newJob: data.about })
-    avatarInformation.setAvatarInfo({avatar: data.avatar});
+    userInformation.setAvatarInfo({avatar: data.avatar});
 })
 .catch((err) => {
   console.error(err);
@@ -74,12 +74,9 @@ function createCard(data) {
 
 const userInformation = new UserInfo(
   constants.profileTitle,
-  constants.profileDescription
+  constants.profileDescription,
+  constants.avatarImg,
 );
-
-//AVATAR INFO
-
-const avatarInformation = new UserInfo("","",constants.avatarImg);
 
 //FORMVALIDATOR.JS
 
@@ -244,7 +241,7 @@ function handleAvatarEditSubmit({ link }) {
   api
     .updateAvatar(link)
     .then(({ avatar }) => {
-      avatarInformation.setAvatarInfo({ avatar });
+      userInformation.setAvatarInfo({ avatar });
       editAvatar.close();
       constants.avatarEditForm.reset();
     })

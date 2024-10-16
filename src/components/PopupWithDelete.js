@@ -22,7 +22,7 @@ export default class PopupWithDelete extends Popup {
     if (isFetching) {
       this._submitBtn.textContent = loadingText;
     } else {
-      this._submitBtn.textContent = "Yes";
+      this._submitBtn.textContent = this._btnText;
     }
   }
 
